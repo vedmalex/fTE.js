@@ -1,0 +1,5 @@
+<#@ extend "Container1.nhtml"#>
+<div><p>#{context.header}</p></div>
+#{partial(context.greetings, 'head')}
+
+не работает... если блок определено в паренте!!!

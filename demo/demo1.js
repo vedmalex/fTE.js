@@ -1,21 +1,5 @@
 var Factory = require('../').Factory;
 
-
-// F.ensure('QuickLinks.nhtml', 'qlinks');
-// var s = F.run({
-// 	title:"Quick Links",
-// 	items:[
-// 		{url:"#", title:"one"},
-// 		{url:"#", title:"two"},
-// 		{url:"#", title:"tree"},
-// 	]
-// }, 'qlinks');
-// console.log(s);
-
-// F.ensure('Container.nhtml', 'qlinks');
-// var s = F.run('TEXT', 'Container1.nhtml');
-// console.log(s);
-
 var microtime = require('microtime');
 
 var s;
