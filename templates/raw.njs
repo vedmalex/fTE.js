@@ -1,5 +1,4 @@
-<#@ requireAs ('codeblock.njs','codeblock') #>
-(function(){
+<#@ requireAs ('codeblock.njs','codeblock') #>(function(){
 	var tpl = {};
 	<#
 		var cb = context.block;
