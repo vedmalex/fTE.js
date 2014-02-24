@@ -1,0 +1,40 @@
+{
+  "name": "pipeline.js",
+  "description": "fTE.js - function Template Engine for javascript node.js",
+  "version": "0.0.1",
+  "author": {
+    "name": "Alex Vedmedenko",
+    "email": "vedmalex@gmail.com"
+  },
+  "keywords": [
+    "template"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "benchmark": "*",
+    "browserify": "*",
+    "dox":"*",
+    "pegjs":"*"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "main": "./index.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vedmalex/fTE.js.git"
+  },
+  "readme": "other sight to template engine",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/vedmalex/fTE.js/issues"
+  }
+}
