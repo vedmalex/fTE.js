@@ -3,6 +3,8 @@ function Template Engine for javascript node.js inspired by [nJSt][https://githu
 It little bit modular, with little bit extensible `PEG.js`, little bit... unusual... without comparising it with any other template engine.
 
 I use if for as code-generator.
+it can generete your template into pure javascript for you to optimize. 
+
 
 
 It is from the groud using [PEG.js][https://github.com/dmajda/pegjs]
@@ -13,3 +15,9 @@ list of TODO:
 
 - manual
 - examples
+
+
+### Links
+
+[PEG.js project][http://pegjs.majda.cz/online]
+[PEG.js online editor][http://peg.arcanis.fr/]
