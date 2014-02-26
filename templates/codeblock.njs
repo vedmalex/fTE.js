@@ -8,6 +8,9 @@ for (var i = 0, len = context.length; i < len; i++) {
 		case 'expression':
 #>out +=#{block.content};<#	
 		break;
+		case 'codeblock':
+#>#{block.content}<#
+		break;
 	}
 #>
 <#}#>
