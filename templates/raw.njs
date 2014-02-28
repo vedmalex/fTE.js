@@ -1,6 +1,6 @@
 <#@ requireAs ('codeblock.njs','codeblock') #>(function(){
 	var tpl = {};
-	<#
+<#
 		var cb = context.block;
 		if(cb){
 
