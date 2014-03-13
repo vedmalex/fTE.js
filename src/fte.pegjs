@@ -46,7 +46,7 @@ function parseIt(input) {
         break;
 
       case "codeblock":
-        result.main += block.content;
+        result.main += block.content + ";";
         break;
       case "block":
         var lr = parseIt(block.content);
