@@ -29,7 +29,7 @@ function parseIt(input) {
     switch (block.type) {
       case "text":
         if(block.content)
-          result.main += "; out +="+JSON.stringify(block.content)+";";
+          result.main += "; out +="+JSON.stringify(block.content)+";\n";
         break;
       case "directive":
           switch(block.content){
@@ -42,11 +42,11 @@ function parseIt(input) {
           }
         break;
       case "expression":
-        result.main += " out += "+ block.content+";";
+        result.main += " out += "+ block.content+";\n";
         break;
 
       case "codeblock":
-        result.main += block.content + ";";
+        result.main += block.content + ";\n";
         break;
       case "block":
         var lr = parseIt(block.content);
