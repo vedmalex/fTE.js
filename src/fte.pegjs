@@ -42,11 +42,11 @@ function parseIt(input) {
           }
         break;
       case "expression":
-        result.main += " out += "+ block.content+";\n";
+        result.main += ";\n out += "+ block.content+";\n";
         break;
 
       case "codeblock":
-        result.main += block.content + ";\n";
+        result.main += ";\n" +block.content + ";\n";
         break;
       case "block":
         var lr = parseIt(block.content);
