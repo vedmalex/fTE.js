@@ -16,11 +16,11 @@ bench:
 
 build:
 	mkdir -p dist
-	$(BROWSERIFY) browser.js -o dist/pipeline.js
+	$(BROWSERIFY) ./browser.js -o dist/fte.browser.js
 
 build-dev:
 	mkdir -p dist
-	$(BROWSERIFY) browser.js --debug -o dist/pipeline.dev.js
+	$(BROWSERIFY) ./browser.js -o dist/fte.browser.dev.js
  
 coverage:
 	rm -rf lib-cov
