@@ -5,14 +5,14 @@
 		if(cb){
 
 #>	  tpl.blocks = {};
-<#		for(var cbn in cb){
+<#			for(var cbn in cb){
 #>	tpl.blocks["#{cbn}"] = function(context,  _content, partial){
 		var out = '';
 		#{partial(cb[cbn].main, 'codeblock')}
 		return out;
 	};
-<#}
-}
+<#			}
+		}
 	var reqList = [];
 	var item, directives = context.directives, extend = '';
 	for (var i = 0, len = directives.length; i < len; i++) {
@@ -28,11 +28,11 @@
 	}
 	if(reqList.length > 0){
 #>	
-	tpl.requires={};
+	tpl.aliases={};
 	<# var rq;
 	for (var i = 0, len = reqList.length; i < len; i++) {
 		rq = reqList[i];
-#> tpl.requires["#{rq.name}"] = {alias:"#{rq.alias}",absPath:#{!!rq.absPath}};
+#> tpl.aliases["#{rq.alias}"] = "#{rq.name}";
 <#
 	}
 }#>
