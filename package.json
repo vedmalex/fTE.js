@@ -1,7 +1,7 @@
 {
   "name": "fte.js",
   "description": "fTE.js - function Template Engine for javascript node.js",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "Alex Vedmedenko",
     "email": "vedmalex@gmail.com"
@@ -10,7 +10,11 @@
     "template"
   ],
   "dependencies": {
-  },
+    "acorn":"*",
+    "esmangle":"*",
+    "escodegen":"*",
+    "esvalid":"*"
+    },
   "devDependencies": {
     "mocha": "*",
     "benchmark": "*",
@@ -37,6 +41,10 @@
   "bugs": {
     "url": "https://github.com/vedmalex/fTE.js/issues"
   },
-  "browser":"./browser.js",
-  "homepage": "https://github.com/vedmalex/fTE.js"
+  "browser": "./browser.js",
+  "homepage": "https://github.com/vedmalex/fTE.js",
+  "gitHead": "6e8edc195859d05c652c21e594dccd8674802012",
+  "_id": "fte.js@0.1.4",
+  "_shasum": "a209ade79c715feeb3f1210667b7d3025ae15f32",
+  "_from": "fte.js@0.1.4"
 }
