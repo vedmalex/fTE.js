@@ -10,11 +10,10 @@
     "template"
   ],
   "dependencies": {
-    "acorn":"*",
-    "esmangle":"*",
-    "escodegen":"*",
-    "esvalid":"*"
-    },
+    "acorn": "*",
+    "esmangle": "*",
+    "escodegen": "*"
+  },
   "devDependencies": {
     "mocha": "*",
     "benchmark": "*",
