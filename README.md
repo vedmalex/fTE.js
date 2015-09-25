@@ -5,8 +5,6 @@ It little bit modular, with little bit extensible `PEG.js`, little bit... unusua
 I use if for as code-generator.
 it can generete your template into pure javascript for you to optimize. 
 
-
-
 It is from the groud using [PEG.js][https://github.com/dmajda/pegjs]
 
 It comes with Sublime-Text-2 syntax hightlight see `./sublime-text/` folder.

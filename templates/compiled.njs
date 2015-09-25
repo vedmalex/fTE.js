@@ -12,7 +12,18 @@
 		return out;
 	};
 <#			}
+		}#>
+	tpl.script = function (context, _content, partial){
+		function content(blockName) {
+			return _content(blockName, context, content, partial);
 		}
+		var out = '';
+		#{partial(context.main,'codeblock')}
+		return out;
+	};
+
+tpl.compile = function() {
+<#		
 	var reqList = [];
 	var item, directives = context.directives, extend = '';
 	for (var i = 0, len = directives.length; i < len; i++) {
@@ -23,26 +34,24 @@
 		}
 		if(item.content === 'requireAs'){
 			var requires = item.name.split(',');
-			reqList.push({name:requires[0], alias:requires[1], absPath:requires[2]});
+			reqList.push({name:requires[0], alias:requires[1], absPath:Boolean(requires[2])});
 		}
 	}
 	if(reqList.length > 0){
 #>	
-	tpl.aliases={};
+	this.aliases={};
 	<# var rq;
 	for (var i = 0, len = reqList.length; i < len; i++) {
 		rq = reqList[i];
-#> tpl.aliases["#{rq.alias}"] = "#{rq.name}";
+#> 
+	this.aliases["#{rq.alias}"] = "#{rq.name}";
+	this.factory.ensure("#{rq.name}", #{rq.absPath});
 <#
 	}
 }#>
-	tpl.script = function (context, _content, partial){
-		function content(blockName) {
-			return _content(blockName, context, content, partial);
-		}
-		var out = '';
-		#{partial(context.main,'codeblock')}
-		return out;
-	};
-	<#if(extend) {#>tpl.parent = #{JSON.stringify(extend)};<#}#>
+
+	<#if(extend) {#>this.parent = #{JSON.stringify(extend)};<#}#>
+    <#if(extend) {#>this.mergeParent(this.factory.ensure(this.parent))<#}#>
+};
+
 	module.exports = tpl;

@@ -125,7 +125,7 @@ codeBlocks =
 expression "expression" = eStart content:(!( eEnd ) .)* eEnd 
 { return new node(f(content), "expression");}
 
-codeBlock "code block" = cbStart content:(!(cbEnd / (blockStartDif / "end #>")) .)* cbEnd 
+codeBlock "code block" = cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd 
 { return new node(f(content), "codeblock");}
 
 directive "directive" = dStart _ content:directives _ "("? _? name:( stringType _? ","? _? )* ")"? _? cbEnd 
@@ -146,26 +146,27 @@ quotedString "single quoted name"=
 dQuotedString "double quoted name"= 
 '"' name:(!'"'.)* '"' {return f(name)}
 
-blockStart = "<#" name:blockStartDif "#>" {return name;}
+cStart = (__ "<#-") / "<#" 
 
-blockStartDif = " block " name: stringType " : "{return name;}
+cEnd = ("-#>" __) / "#>"
 
-blockEnd = "<# end #>"
+dStart "directive start" = (__ "<#-@") / "<#@"
 
-cbStart "code block start sequence" = 
-"<#"!"@"!(blockStartDif / " end #>")
+blockStart = cStart name:blockStartDif cEnd {return name}
 
-cbEnd "codeblock end sequense" = 
-"#>"
+blockStartDif = _ "block" _ name: stringType " : "{return name;}
 
-dStart "directive start" = 
-"<#@"
+blockEnd = cStart blockEndEdn
 
-eStart "expression start" = 
-"#{"
+blockEndEdn = _ "end" _ cEnd
 
-eEnd "expression end" = 
-"}"
+cbStart "code block start sequence" = cStart !"@"!(blockStartDif / blockEndEdn)
+
+cbEnd "codeblock end sequense" = cEnd
+
+eStart "expression start" = "#{"
+
+eEnd "expression end" = "}"
 
 directives = 
   "extend"
