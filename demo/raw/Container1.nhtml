@@ -1,5 +1,5 @@
-<#@ requireAs ('Container3.nhtml', 'head') #>
-<#@ extend 'Container.nhtml' #>
-<# block 'header' : #>
+<#-@ requireAs ('Container3.nhtml', 'head') -#>
+<#-@ extend 'Container.nhtml' -#>
+<#- block 'header' : -#>
 <div>#{context.header}</div>
-<# end #>
+<#- end -#>

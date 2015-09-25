@@ -1,7 +1,7 @@
 {
   "name": "fte.js",
   "description": "fTE.js - function Template Engine for javascript node.js",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": {
     "name": "Alex Vedmedenko",
     "email": "vedmalex@gmail.com"
