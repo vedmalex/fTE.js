@@ -124,6 +124,7 @@ firstText = onlyText &codeBlocks
 
 lastText = &codeBlocks onlyText
 
+
 codeBlocks = 
   canBeInBlock
  / block
@@ -140,10 +141,10 @@ expression "expression" = eStart content:(!( eEnd / ueStart) .)* eEnd
 uexpression "escaped expression" = ueStart content:(!( eEnd / eStart ) .)* eEnd 
 { return new node(f(content), "uexpression");}
 
-codeBlock "code block" = indent:_ cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd _ eol:eol?
-{ return new node(f(content), "codeblock", undefined, f(indent), eol);}
+codeBlock "code block" = eol? indent:_ cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd
+{ return new node(f(content), "codeblock", undefined, f(indent));}
 
-directive "directive" = _ dStart _ content:directives _ "("? _? name:( stringType _? ","? _? )* ")"? _? cbEnd _ eol?
+directive "directive" = _ dStart _ content:directives _ "("? _? name:( stringType _? ","? _? )* ")"? _? cbEnd (_ eol)?
 { return new node(content, "directive", f(name)); }
 
 notText = directive / cbStart / cbEnd / expression / uexpression / blockEnd / blockStart 
@@ -161,9 +162,9 @@ quotedString "single quoted name"=
 dQuotedString "double quoted name"= 
 '"' name:(!'"'.)* '"' {return f(name)}
 
-cStart = _ ("<#-" / "<#")
+cStart =  _ "<#"
 
-cEnd = ("-#>" _ eol?) / "#>"
+cEnd = ("-#>" (_ eol)?) / "#>"
 
 dStart "directive start" = _ "<#@"
 
