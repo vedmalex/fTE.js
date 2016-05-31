@@ -21,3 +21,19 @@ list of TODO:
 [PEG.js online editor][http://peg.arcanis.fr/]
 
 using esprima instead of acorn.
+
+TODO:
+ - изменять context переменную...
+ - асинхронные вызовы, 
+  - на промисах
+  - на callback
+  !{} escape --> done
+  !!!indentation!!!
+ unescape // стандартные функции
+ - добавить комментарии, с параметрами для однострочных и блочных комментариев.
+ - stream-support??? что это...
+ -
+
+в блок надо передавать переменные... хотя функции справляются и без блока
+
+зачин для резки файлов есть directive fileName
