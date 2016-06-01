@@ -1,8 +1,10 @@
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
-var compile = require('./../').compileLight;
+var compileFull = require('./../').compileFull;
+var compileLight = require('./../').compileLight;
 
-function load(fileName, folder) {
+function load(fileName, folder, compile) {
+	fs.ensureDirSync(folder);
 	var fn = path.resolve(fileName);
 	if (fs.existsSync(fn)) {
 		var content = fs.readFileSync(fn);
@@ -21,7 +23,8 @@ if (files.length > 0) {
 		if (stat.isFile()) {
 			ext = path.extname(rec);
 			if (ext === '.nhtml' || ext === '.njs') {
-				load(rec, './compiled');
+				load(rec, './compiled', compileFull);
+				load(rec, './compiledLight', compileLight);
 			}
 		}
 	}

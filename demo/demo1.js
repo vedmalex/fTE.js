@@ -1,29 +1,29 @@
 var Factory = require('../').Factory;
-
-var microtime = require('microtime');
-
 var s;
-
-
 var raw = new Factory({
-    root: 'raw'
+    root: 'raw',
+    debug:true,
 });
-var startRaw = microtime.now();
-s = raw.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
-var endRaw = microtime.now();
 
-var startRaw2 = microtime.now();
+console.time('raw');
 s = raw.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
-var endRaw2 = microtime.now();
+console.timeEnd('raw');
+
+console.time('raw-cached');
+s = raw.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+console.timeEnd('raw-cached');
 
 var comp = new Factory({
-    root: 'compiled'
+    root: 'compiled',
+    debug:true,
 });
 
-var startComp = microtime.now();
+console.time('compiled');
 s = comp.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
-var endComp = microtime.now();
+console.timeEnd('compiled');
 
-console.log("raw", endRaw - startRaw);
-console.log("raw2", endRaw2 - startRaw2);
-console.log("comp", endComp - startComp);
+console.time('compiled-cached');
+s = comp.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+console.timeEnd('compiled-cached');
+
+console.log(s);
