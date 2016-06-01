@@ -10,10 +10,11 @@
     "template"
   ],
   "dependencies": {
-    "esprima": "*",
-    "esmangle": "*",
     "escodegen": "*",
-    "esvalid":"*"
+    "esmangle": "*",
+    "esprima": "*",
+    "esvalid": "*",
+    "fs-extra": "^0.30.0"
   },
   "devDependencies": {
     "mocha": "*",
@@ -27,7 +28,8 @@
   },
   "scripts": {
     "test": "make test",
-    "genit": "pegjs ./src/fte.pegjs ./lib/fte.pegjs.js && pegjs ./src/raw.pegjs ./lib/raw.pegjs.js"
+    "templates": "node compile_fte_templates.js",
+    "genit": "pegjs ./src/fte.pegjs ./lib/fte.pegjs.js && pegjs ./src/raw.pegjs ./lib/raw.pegjs.js && npm run templates"
   },
   "main": "./index.js",
   "engines": {
