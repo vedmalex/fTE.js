@@ -33,7 +33,7 @@ tpl.compile = function() {
 			extend = item.name.trim();
 		}
 		if(item.content === 'requireAs'){
-			var requires = item.name.split(',');
+			var requires = item.name.split(',').map(function(i){return i.trim()});
 			reqList.push({name:requires[0], alias:requires[1], absPath:Boolean(requires[2])});
 		}
 	}
