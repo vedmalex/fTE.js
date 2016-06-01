@@ -32,7 +32,7 @@ function parseIt(input) {
           result.main += ";"+ "/*line" + block.line +"*/" +" out +="+JSON.stringify(block.content)+";\n";
         break;
       case "directive":
-          switch(block.content){
+          switch(block.content) {
             case "extend":
              result.extend = block.name;
             break;
@@ -124,7 +124,6 @@ firstText = onlyText &codeBlocks
 
 lastText = &codeBlocks onlyText
 
-
 codeBlocks = 
   canBeInBlock
  / block
@@ -135,13 +134,13 @@ canBeInBlock =
  / uexpression
  / codeBlock
 
-expression "expression" = eStart content:(!( eEnd / ueStart) .)* eEnd 
-{ return new node(f(content), "expression");}
+expression "expression" = indent:_ eStart content:(!( eEnd / ueStart) .)* eEnd 
+{ return new node(f(content), "expression", undefined, f(indent));}
 
-uexpression "escaped expression" = ueStart content:(!( eEnd / eStart ) .)* eEnd 
-{ return new node(f(content), "uexpression");}
+uexpression "escaped expression" = indent:_ ueStart content:(!( eEnd / eStart ) .)* eEnd 
+{ return new node(f(content), "uexpression", undefined, f(indent));}
 
-codeBlock "code block" = eol? indent:_ cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd
+codeBlock "code block" = indent:_ cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd
 { return new node(f(content), "codeblock", undefined, f(indent));}
 
 directive "directive" = _ dStart _ content:directives _ "("? _? name:( stringType _? ","? _? )* ")"? _? cbEnd (_ eol)?
@@ -185,10 +184,10 @@ ueStart "escaped expression start" = "!{"
 eStart "expression start" = "#{"
 
 eEnd "expression end" = "}"
-directives = 
-  "extend"
-/ "fileName"
-/ "requireAs"
+
+directives = valiableName
+
+valiableName = name:([a-z0-9_]i)* {return f(name)}
 
 _ = WhiteSpace* 
 __eol = _ eol
