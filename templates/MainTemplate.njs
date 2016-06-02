@@ -1,5 +1,5 @@
 <#@ requireAs ('codeblock.njs','codeblock') #>
-<#    
+<#-    
   var reqList = [];
   var contextName = 'context';
   var item, directives = context.directives, extend = '';
@@ -17,7 +17,7 @@
       contextName = item.name.split(',')[0].trim();
     }
   }
-#>
+-#>
 {
   script: function (#{contextName}, _content, partial){
     function content(blockName) {

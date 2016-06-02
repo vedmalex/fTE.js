@@ -46,7 +46,7 @@ module.exports = {
                 contextName = item.name.split(',')[0].trim();
             }
         }
-        out += '\n{\n  script: function (';
+        out += '{\n  script: function (';
         out += contextName;
         out += ', _content, partial){\n    function content(blockName) {\n      return _content(blockName,';
         out += applyIndent(contextName, ' ');
