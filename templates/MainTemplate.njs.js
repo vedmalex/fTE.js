@@ -26,7 +26,7 @@ module.exports = {
         }
         out += '{\n  script: function (context, _content, partial){\n    function content(blockName) {\n      return _content(blockName, context, content, partial);\n    }\n    var out = \'\';\n';
         out += applyIndent(partial(context.main, 'codeblock'), '    ');
-        out += '\n    return out;\n  },\n\n';
+        out += '\n    return out;\n  },\n';
         var cb = context.block;
         if (cb) {
             out += '  blocks : {\n';
@@ -37,9 +37,9 @@ module.exports = {
                 out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
                 out += '\n      return out;\n    },\n';
             }
-            out += '  },\n';
+            out += '  },';
         }
-        out += '\n  compile: function() {\n';
+        out += '  compile: function() {\n';
         var reqList = [];
         var item, directives = context.directives, extend = '';
         for (var i = 0, len = directives.length; i < len; i++) {

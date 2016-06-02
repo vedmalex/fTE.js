@@ -24,7 +24,7 @@ module.exports = {
                 return str;
             }
         }
-        out += 'function applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n';
+        out += 'function applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}';
         var block;
         function applyIndent(str, _indent) {
             var indent = '';
@@ -51,10 +51,9 @@ module.exports = {
             var content = block.content;
             var indent = '';
             if (block.indent) {
-                content = applyIndent(content, block.indent);
                 indent = JSON.stringify(block.indent);
             }
-            out += '/*';
+            out += '\n/*';
             out += block.line;
             out += ':';
             out += block.column;
@@ -62,15 +61,12 @@ module.exports = {
             switch (block.type) {
             case 'text':
                 out += ' out +=';
-                if (indent) {
-                    out += ' applyIndent(';
-                    out += JSON.stringify(content);
-                    out += ',';
-                    out += applyIndent(indent, ' ');
-                    out += '); \n';
+                if (block.indent) {
+                    out += JSON.stringify(applyIndent(content, block.indent));
+                    out += ';';
                 } else {
-                    out += applyIndent(JSON.stringify(content), ' ');
-                    out += '; \n';
+                    out += JSON.stringify(content);
+                    out += ';';
                 }
                 break;
             case 'uexpression':
@@ -80,11 +76,11 @@ module.exports = {
                     out += content;
                     out += '),';
                     out += applyIndent(indent, ' ');
-                    out += ');\n';
+                    out += ');';
                 } else {
                     out += ' escape(';
                     out += content;
-                    out += ')\n';
+                    out += ');';
                 }
                 break;
             case 'expression':
@@ -94,14 +90,18 @@ module.exports = {
                     out += content;
                     out += ',';
                     out += applyIndent(indent, ' ');
-                    out += ');\n';
+                    out += ');';
                 } else {
                     out += applyIndent(content, ' ');
-                    out += '\n';
+                    out += ';\n';
                 }
                 break;
             case 'codeblock':
-                out += applyIndent(content, ' ');
+                if (block.indent) {
+                    out += applyIndent(content, block.indent);
+                } else {
+                    out += content;
+                }
                 break;
             }
         }

@@ -8,7 +8,6 @@
     #{partial(context.main,'codeblock')}
     return out;
   },
-
 <#
     var cb = context.block;
     if(cb) {-#>
@@ -21,9 +20,7 @@
     },
 <#      }-#>
   },
-<#  } 
--#>
-
+<#-  } -#>
   compile: function() {
 <#    
   var reqList = [];
