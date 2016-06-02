@@ -1,3 +1,13 @@
+<#
+var needToIndent = false;
+  for (var i = 0, len = context.length; i < len; i++) {
+    if(context[i].indent){
+      needToIndent = true;
+      break; 
+    }
+  }
+#>
+<#if(needToIndent){#>
 function applyIndent(str, _indent) {
   var indent = '';
   if (typeof _indent == 'number' && _indent > 0) {
@@ -18,6 +28,7 @@ function applyIndent(str, _indent) {
     return str;
   }
 }
+<#}#>
 <#- var block;
 function applyIndent(str, _indent){
   var indent='';
