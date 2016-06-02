@@ -47,7 +47,7 @@ module.exports = {
             var content = block.content;
             var blockIndent = block.indent && !noIndent;
             var indent = '';
-            if (block.indent && !noIndent) {
+            if (block.indent) {
                 indent = JSON.stringify(block.indent);
             }
             out += '\n/*';
@@ -58,8 +58,13 @@ module.exports = {
             switch (block.type) {
             case 'text':
                 out += ' out +=';
-                if (blockIndent) {
+                if (block.indent && !noIndent) {
                     out += JSON.stringify(applyIndent(content, block.indent));
+                    out += ';';
+                } else if (indent) {
+                    out += indent;
+                    out += ' +';
+                    out += ' ' + JSON.stringify(content);
                     out += ';';
                 } else {
                     out += JSON.stringify(content);
@@ -68,26 +73,36 @@ module.exports = {
                 break;
             case 'uexpression':
                 out += ' out +=';
-                if (indent) {
-                    out += ' applyIndent(escape(';
+                if (indent && !noIndent) {
+                    out += 'applyIndent(escape(';
                     out += content;
                     out += '),';
+                    out += ' ' + indent;
+                    out += ');';
+                } else if (indent) {
                     out += indent;
+                    out += ' + escape(';
+                    out += content;
                     out += ');';
                 } else {
-                    out += ' escape(';
+                    out += 'escape(';
                     out += content;
                     out += ');';
                 }
                 break;
             case 'expression':
                 out += ' out +=';
-                if (indent) {
-                    out += ' applyIndent(';
+                if (indent && !noIndent) {
+                    out += 'applyIndent(';
                     out += content;
                     out += ',';
-                    out += indent;
+                    out += ' ' + indent;
                     out += ');';
+                } else if (indent) {
+                    out += indent;
+                    out += ' +';
+                    out += ' ' + content;
+                    out += ';';
                 } else {
                     out += content;
                     out += ';\n';
@@ -96,6 +111,9 @@ module.exports = {
             case 'codeblock':
                 if (blockIndent) {
                     out += applyIndent(content, block.indent);
+                } else if (block.indent) {
+                    out += block.indent;
+                    out += content;
                 } else {
                     out += content;
                 }
