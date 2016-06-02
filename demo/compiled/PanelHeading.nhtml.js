@@ -1,7 +1,8 @@
 module.exports = {
    script: function (context, _content, partial){
-     function content(blockName) {
-       return _content(blockName, context, content, partial);
+     function content(blockName, ctx) {
+       if(ctx === undefined || ctx === null) ctx = context;
+       return _content(blockName, ctx, content, partial);
      }
      var out = '';
      function applyIndent(str, _indent) {

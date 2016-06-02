@@ -6,6 +6,6 @@ var raw = new Factory({
     debug:true,
 });
 
-s = raw.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+s = raw.run({content:'TEXT', head: { header:'this is the header'}, greetings:'Santa'}, 'Container2.nhtml');
 
 fs.writeFileSync('demo1.html', s);

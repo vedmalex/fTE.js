@@ -1,8 +1,9 @@
 (function(){
   return {
    script: function (obj, _content, partial){
-     function content(blockName) {
-       return _content(blockName, obj, content, partial);
+     function content(blockName, ctx) {
+       if(ctx === undefined || ctx === null) ctx = obj;
+       return _content(blockName, ctx, content, partial);
      }
      var out = '';
      

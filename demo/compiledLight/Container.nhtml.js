@@ -1,8 +1,9 @@
 (function(){
   return {
    script: function (context, _content, partial){
-     function content(blockName) {
-       return _content(blockName, context, content, partial);
+     function content(blockName, ctx) {
+       if(ctx === undefined || ctx === null) ctx = context;
+       return _content(blockName, ctx, content, partial);
      }
      var out = '';
      function applyIndent(str, _indent) {
@@ -29,8 +30,8 @@
      /*2:1*/
       out +="<div>\n";
      /*3:1*/
-      out += applyIndent(content('header'), "  ");
-     /*3:23*/
+      out += applyIndent(content('header', context.head), "  ");
+     /*3:37*/
       out +="\n</div>\n<div>\n";
      /*6:1*/
       out += applyIndent(content(), "  ");

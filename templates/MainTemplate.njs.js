@@ -1,7 +1,9 @@
 module.exports = {
     script: function (context, _content, partial) {
-        function content(blockName) {
-            return _content(blockName, context, content, partial);
+        function content(blockName, ctx) {
+            if (ctx === undefined || ctx === null)
+                ctx = context;
+            return _content(blockName, ctx, content, partial);
         }
         var out = '';
         function applyIndent(str, _indent) {
@@ -48,9 +50,9 @@ module.exports = {
         }
         out += '{\n  script: function (';
         out += contextName;
-        out += ', _content, partial){\n    function content(blockName) {\n      return _content(blockName,';
+        out += ', _content, partial){\n    function content(blockName, ctx) {\n      if(ctx === undefined || ctx === null) ctx =';
         out += applyIndent(contextName, ' ');
-        out += ', content, partial);\n    }\n    var out = \'\';\n';
+        out += ';\n      return _content(blockName, ctx, content, partial);\n    }\n    var out = \'\';\n';
         out += applyIndent(partial(context.main, 'codeblock'), '    ');
         out += '\n    return out;\n  },\n';
         var cb = context.block;

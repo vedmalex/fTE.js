@@ -20,8 +20,9 @@
 -#>
 {
   script: function (#{contextName}, _content, partial){
-    function content(blockName) {
-      return _content(blockName, #{contextName}, content, partial);
+    function content(blockName, ctx) {
+      if(ctx === undefined || ctx === null) ctx = #{contextName};
+      return _content(blockName, ctx, content, partial);
     }
     var out = '';
     #{partial(context.main,'codeblock')}
