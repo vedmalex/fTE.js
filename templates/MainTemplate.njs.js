@@ -4,24 +4,24 @@ module.exports = {
             return _content(blockName, context, content, partial);
         }
         var out = '';
-        out += '{\n\tscript: function (context, _content, partial){\n\t\tfunction content(blockName) {\n\t\t\treturn _content(blockName, context, content, partial);\n\t\t}\n\t\tvar out = \'\';\n';
-        out += '\t\t';
+        out += '{\n  script: function (context, _content, partial){\n    function content(blockName) {\n      return _content(blockName, context, content, partial);\n    }\n    var out = \'\';\n';
+        out += '    ';
         out += partial(context.main, 'codeblock');
-        out += '\n\t\treturn out;\n\t},\n\n';
+        out += '\n    return out;\n  },\n\n';
         var cb = context.block;
         if (cb) {
-            out += '\tblocks : {\n';
+            out += '  blocks : {\n';
             for (var cbn in cb) {
-                out += '\t\t"';
+                out += '    "';
                 out += cbn;
-                out += '": function(context,  _content, partial){\n\t\t\tvar out = \'\';\n';
-                out += '\t\t\t';
+                out += '": function(context,  _content, partial){\n      var out = \'\';\n';
+                out += '      ';
                 out += partial(cb[cbn].main, 'codeblock');
-                out += '\n\t\t\treturn out;\n\t\t},\n';
+                out += '\n      return out;\n    },\n';
             }
-            out += '\t},\n';
+            out += '  },\n';
         }
-        out += '\n\tcompile: function() {\n';
+        out += '\n  compile: function() {\n';
         var reqList = [];
         var item, directives = context.directives, extend = '';
         for (var i = 0, len = directives.length; i < len; i++) {
@@ -41,15 +41,15 @@ module.exports = {
             }
         }
         if (reqList.length > 0) {
-            out += '\tthis.aliases={};\n';
+            out += '  this.aliases={};\n';
             var rq;
             for (var i = 0, len = reqList.length; i < len; i++) {
                 rq = reqList[i];
-                out += '\tthis.aliases["';
+                out += '  this.aliases["';
                 out += rq.alias;
                 out += '"] = "';
                 out += rq.name;
-                out += '";\n\tthis.factory.ensure("';
+                out += '";\n  this.factory.ensure("';
                 out += rq.name;
                 out += '",';
                 out += ' ';
@@ -66,7 +66,7 @@ module.exports = {
         if (extend) {
             out += '  this.mergeParent(this.factory.ensure(this.parent))\n';
         }
-        out += '\t},\n}\n';
+        out += '  },\n}\n';
         return out;
     },
     compile: function () {

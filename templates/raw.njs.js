@@ -4,7 +4,7 @@ module.exports = {
             return _content(blockName, context, content, partial);
         }
         var out = '';
-        out += '(function(){\n\treturn';
+        out += '(function(){\n  return';
         out += ' ';
         out += partial(context, 'core');
         out += ';\n})();';
