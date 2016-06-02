@@ -4,9 +4,28 @@ module.exports = {
             return _content(blockName, context, content, partial);
         }
         var out = '';
+        function applyIndent(str, _indent) {
+            var indent = '';
+            if (typeof _indent == 'number' && _indent > 0) {
+                var res = '';
+                for (var i = 0; i < _indent; i++) {
+                    res += ' ';
+                }
+                indent = res;
+            }
+            if (typeof _indent == 'string' && _indent.length > 0) {
+                indent = _indent;
+            }
+            if (indent && str) {
+                return str.split('\n').map(function (s) {
+                    return indent + s;
+                }).join('\n');
+            } else {
+                return str;
+            }
+        }
         out += '{\n  script: function (context, _content, partial){\n    function content(blockName) {\n      return _content(blockName, context, content, partial);\n    }\n    var out = \'\';\n';
-        out += '    ';
-        out += partial(context.main, 'codeblock');
+        out += applyIndent(partial(context.main, 'codeblock'), '    ');
         out += '\n    return out;\n  },\n\n';
         var cb = context.block;
         if (cb) {
@@ -15,8 +34,7 @@ module.exports = {
                 out += '    "';
                 out += cbn;
                 out += '": function(context,  _content, partial){\n      var out = \'\';\n';
-                out += '      ';
-                out += partial(cb[cbn].main, 'codeblock');
+                out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
                 out += '\n      return out;\n    },\n';
             }
             out += '  },\n';
@@ -52,15 +70,13 @@ module.exports = {
                 out += '";\n  this.factory.ensure("';
                 out += rq.name;
                 out += '",';
-                out += ' ';
-                out += rq.absPath;
+                out += applyIndent(rq.absPath, ' ');
                 out += ');\n';
             }
         }
         if (extend) {
             out += '  this.parent =';
-            out += ' ';
-            out += JSON.stringify(extend);
+            out += applyIndent(JSON.stringify(extend), ' ');
             out += ';\n';
         }
         if (extend) {
