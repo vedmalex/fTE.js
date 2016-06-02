@@ -1,6 +1,8 @@
 <#@ extend 'Container.nhtml' #>
 <#@ requireAs ('Container3.nhtml', 'head') #>
-<# block 'header' : #>
-<div>#{context.header}</div>
-<# end #>
+<# block 'header' : -#>
+<div>
+  #{context.header}
+</div>
+<#- end -#>
 #{content()}

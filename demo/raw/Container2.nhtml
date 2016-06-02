@@ -1,5 +1,8 @@
 <#@ extend "Container1.nhtml"#>
-<div> yet another header title <p>!{context.header}</p></div>
+<div> 
+  <h3>yet another header title</h3> 
+  <p>!{context.header}</p>
+</div>
 #{partial(context.greetings, 'head')}
 
 !!! работает... даже если partial определен в базовом шаблоне... !!!

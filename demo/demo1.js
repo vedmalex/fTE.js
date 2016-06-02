@@ -1,4 +1,5 @@
 var Factory = require('../').Factory;
+var fs = require('fs-extra');
 var s;
 var raw = new Factory({
     root: 'raw',
@@ -26,4 +27,4 @@ console.time('compiled-cached');
 s = comp.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
 console.timeEnd('compiled-cached');
 
-console.log(s);
+fs.writeFileSync('demo1.html', s);

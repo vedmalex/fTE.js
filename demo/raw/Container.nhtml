@@ -1,2 +1,7 @@
-<div>#{content('header')}</div>
-<div>#{content()}</div>
+<#@ extend 'PanelHeading.nhtml' #>
+<div>
+  #{content('header')}
+</div>
+<div>
+  #{content()}
+</div>

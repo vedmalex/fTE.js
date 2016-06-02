@@ -1,1 +1,7 @@
-hello #{context}!
+<p>
+<#- if(context == 'Santa'){-#>
+  Hello Dear #{context}!
+<#-} else {-#>
+  Hello #{context}!
+<#-}-#>
+</p>

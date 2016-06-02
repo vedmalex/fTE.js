@@ -1,3 +1,5 @@
 <div class="panel-heading">
-	<h3 class="panel-title">#{context}</h3> 
+  <h3 class="panel-title">
+    #{content()}
+  </h3> 
 </div>
