@@ -31,11 +31,9 @@ module.exports = {
                 break;
             }
         }
-        out += '\n';
         if (needToIndent) {
-            out += '\nfunction applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n';
+            out += 'function applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n';
         }
-        var block;
         function applyIndent(str, _indent) {
             var indent = '';
             if (typeof _indent == 'number' && _indent > 0) {
@@ -57,7 +55,7 @@ module.exports = {
             }
         }
         for (var i = 0, len = context.length; i < len; i++) {
-            block = context[i];
+            var block = context[i];
             var content = block.content;
             var indent = '';
             if (block.indent) {
@@ -67,7 +65,7 @@ module.exports = {
             out += block.line;
             out += ':';
             out += block.column;
-            out += '*/ \n';
+            out += '*/\n';
             switch (block.type) {
             case 'text':
                 out += ' out +=';

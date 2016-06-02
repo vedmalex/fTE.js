@@ -6,8 +6,8 @@ var needToIndent = false;
       break; 
     }
   }
-#>
-<#if(needToIndent){#>
+-#>
+<#if(needToIndent){ -#>
 function applyIndent(str, _indent) {
   var indent = '';
   if (typeof _indent == 'number' && _indent > 0) {
@@ -28,8 +28,8 @@ function applyIndent(str, _indent) {
     return str;
   }
 }
-<#}#>
-<#- var block;
+<#}-#>
+<#-
 function applyIndent(str, _indent){
   var indent='';
   if (typeof _indent == 'number' && _indent > 0){
@@ -51,16 +51,13 @@ function applyIndent(str, _indent){
   }
 }
 for (var i = 0, len = context.length; i < len; i++) {
-  block = context[i];
--#>
-<#
+  var block = context[i];
   var content = block.content;
   var indent = '';
   if(block.indent){
     indent = JSON.stringify(block.indent);
--#>
-<#}#>
-/*#{block.line}:#{block.column}*/ 
+}#>
+/*#{block.line}:#{block.column}*/
 <#
   switch(block.type){
     case 'text':
