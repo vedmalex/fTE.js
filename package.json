@@ -29,7 +29,7 @@
   "scripts": {
     "test": "make test",
     "templates": "node compile_fte_templates.js",
-    "genit": "pegjs ./src/fte.pegjs ./lib/fte.pegjs.js && pegjs ./src/raw.pegjs ./lib/raw.pegjs.js && npm run templates"
+    "genit": "pegjs ./src/raw.pegjs ./lib/raw.pegjs.js && npm run templates"
   },
   "main": "./index.js",
   "engines": {

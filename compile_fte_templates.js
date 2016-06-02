@@ -6,12 +6,12 @@ var src = 'templates';
 
 // сделать gulp
 
-function load(fileName, folder, compile) {
+function load(fileName, folder, compile, optimize) {
   fs.ensureDirSync(folder);
   var fn = path.resolve(fileName);
   if (fs.existsSync(fn)) {
     var content = fs.readFileSync(fn);
-    var result = compile(content);
+    var result = compile(content, optimize);
     fs.writeFileSync(path.join(folder, path.basename(fileName) + '.js'), result);
   }
 }
@@ -26,7 +26,7 @@ if (files.length > 0) {
     if (stat.isFile()) {
       ext = path.extname(rec);
       if (ext === '.nhtml' || ext === '.njs') {
-        load(rec, src, compileFull);
+        load(rec, src, compileFull, true);
       }
     }
   }

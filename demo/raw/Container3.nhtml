@@ -1,7 +1,10 @@
-<p>
-<#- if(context == 'Santa'){-#>
-  Hello Dear #{context}!
-<#-} else {-#>
-  Hello #{context}!
-<#-}-#>
-</p>
+<#@ noIndent #>
+<div>
+  <p>
+  <# if(context == 'Santa'){-#>
+    Hello Dear #{context}!
+  <#-} else {-#>
+    Hello #{context}!
+  <#-}#>
+  </p>
+</div>
