@@ -7,8 +7,9 @@ module.exports = {
         var block;
         for (var i = 0, len = context.length; i < len; i++) {
             block = context[i];
+            var indent;
             if (block.indent) {
-                var indent = JSON.stringify(block.indent);
+                indent = JSON.stringify(block.indent);
                 out += ' out +=';
                 out += ' ';
                 out += indent;
