@@ -24,23 +24,8 @@ module.exports = {
                 return str;
             }
         }
-        out += '{\n  script: function (context, _content, partial){\n    function content(blockName) {\n      return _content(blockName, context, content, partial);\n    }\n    var out = \'\';\n';
-        out += applyIndent(partial(context.main, 'codeblock'), '    ');
-        out += '\n    return out;\n  },\n';
-        var cb = context.block;
-        if (cb) {
-            out += '  blocks : {\n';
-            for (var cbn in cb) {
-                out += '    "';
-                out += cbn;
-                out += '": function(context,  _content, partial){\n      var out = \'\';\n';
-                out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
-                out += '\n      return out;\n    },\n';
-            }
-            out += '  },';
-        }
-        out += '  compile: function() {\n';
         var reqList = [];
+        var contextName = 'context';
         var item, directives = context.directives, extend = '';
         for (var i = 0, len = directives.length; i < len; i++) {
             item = directives[i];
@@ -57,7 +42,32 @@ module.exports = {
                     absPath: Boolean(requires[2])
                 });
             }
+            if (item.content === 'context') {
+                contextName = item.name.split(',')[0].trim();
+            }
         }
+        out += '\n{\n  script: function (';
+        out += contextName;
+        out += ', _content, partial){\n    function content(blockName) {\n      return _content(blockName,';
+        out += applyIndent(contextName, ' ');
+        out += ', content, partial);\n    }\n    var out = \'\';\n';
+        out += applyIndent(partial(context.main, 'codeblock'), '    ');
+        out += '\n    return out;\n  },\n';
+        var cb = context.block;
+        if (cb) {
+            out += '  blocks : {\n';
+            for (var cbn in cb) {
+                out += '    "';
+                out += cbn;
+                out += '": function(';
+                out += contextName;
+                out += ',  _content, partial){\n      var out = \'\';\n';
+                out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
+                out += '\n      return out;\n    },\n';
+            }
+            out += '  },';
+        }
+        out += '  compile: function() {';
         if (reqList.length > 0) {
             out += '  this.aliases={};\n';
             var rq;
