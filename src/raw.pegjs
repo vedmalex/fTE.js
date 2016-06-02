@@ -113,6 +113,7 @@ canBeInBlock =
   expression
  / uexpression
  / codeBlock
+ / directive
 
 expression "expression" = indent:_ eStart content:(!( eEnd / ueStart) .)* eEnd 
 { return new node(f(content), "expression", undefined, f(indent));}

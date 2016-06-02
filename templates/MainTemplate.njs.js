@@ -26,6 +26,19 @@ module.exports = {
                 return str;
             }
         }
+        function processRequire(item) {
+            var requires = item.name.split(',').map(function (i) {
+                return i.trim();
+            });
+            return {
+                name: requires[0],
+                alias: requires[1],
+                absPath: Boolean(requires[2])
+            };
+        }
+        function processContextName(item) {
+            return item.name.split(',')[0].trim();
+        }
         var reqList = [];
         var contextName = 'context';
         var item, directives = context.directives, extend = '';
@@ -35,17 +48,10 @@ module.exports = {
                 extend = item.name.trim();
             }
             if (item.content === 'requireAs') {
-                var requires = item.name.split(',').map(function (i) {
-                    return i.trim();
-                });
-                reqList.push({
-                    name: requires[0],
-                    alias: requires[1],
-                    absPath: Boolean(requires[2])
-                });
+                reqList.push(processRequire(item));
             }
             if (item.content === 'context') {
-                contextName = item.name.split(',')[0].trim();
+                contextName = processContextName(item);
             }
         }
         out += '{\n  script: function (';
@@ -59,10 +65,19 @@ module.exports = {
         if (cb) {
             out += '  blocks : {\n';
             for (var cbn in cb) {
+                var blockConetxtName = contextName;
+                var bdirvs = cb[cbn].directives;
+                var item = bdirvs[i];
+                for (var i = 0, len = bdirvs.length; i < len; i++) {
+                    item = bdirvs[i];
+                    if (item.content === 'context') {
+                        blockConetxtName = processContextName(item);
+                    }
+                }
                 out += '    "';
                 out += cbn;
                 out += '": function(';
-                out += contextName;
+                out += blockConetxtName;
                 out += ',  _content, partial){\n      var out = \'\';\n';
                 out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
                 out += '\n      return out;\n    },\n';
