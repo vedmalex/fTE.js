@@ -1,6 +1,9 @@
 { 
 //http://pegjs.majda.cz/online
 //http://peg.arcanis.fr/
+
+var eol = ['\n','\r\n','\r','\u2028','\u2029'];
+
 function wrapCode(code) {
   var result = {};
   result.parameters = 'context, _content, partial';
@@ -67,7 +70,12 @@ function parseIt(input) {
     this.type = type;
     if(name) this.name = name;
     this.content = content;
-    if(indent) this.indent = indent;// to use same indentation as source code
+    if(indent) {
+      this.indent = indent;// to use same indentation as source code
+      if(~eol.indexOf(indent[0])){
+        delete this.indent;
+      }
+    }
     if(eol) this.eol = true;
     var loc = location();
     var bol = loc.start.column == 1;
@@ -140,7 +148,7 @@ expression "expression" = indent:_ eStart content:(!( eEnd / ueStart) .)* eEnd
 uexpression "escaped expression" = indent:_ ueStart content:(!( eEnd / eStart ) .)* eEnd 
 { return new node(f(content), "uexpression", undefined, f(indent));}
 
-codeBlock "code block" = indent:_ cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd
+codeBlock "code block" = indent:(eol? _) cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd
 { return new node(f(content), "codeblock", undefined, f(indent));}
 
 directive "directive" = _ dStart _ content:directives _ "("? _? name:( stringType _? ","? _? )* ")"? _? cbEnd (_ eol)?
@@ -161,7 +169,7 @@ quotedString "single quoted name"=
 dQuotedString "double quoted name"= 
 '"' name:(!'"'.)* '"' {return f(name)}
 
-cStart =  _ "<#"
+cStart =  ((eol _)? "<#-") / (_"<#")
 
 cEnd = ("-#>" (_ eol)?) / "#>"
 
