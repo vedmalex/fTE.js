@@ -1,12 +1,12 @@
+Line 4: Unexpected token (;
 (function(){
-  return {
+  return 
+ {
    script: function (context, _content, partial){
      function content(blockName) {
        return _content(blockName, context, content, partial);
      }
      var out = '';
-     
-     
      function applyIndent(str, _indent) {
        var indent = '';
        if (typeof _indent == 'number' && _indent > 0) {
@@ -28,22 +28,21 @@
        }
      }
      
-     /*2:1*/ 
+     /*2:1*/
       out +="<div>\n";
-     /*3:1*/ 
+     /*3:1*/
       out += applyIndent(content('header'), "  ");
-     /*3:23*/ 
+     /*3:23*/
       out +="\n</div>\n<div>\n";
-     /*6:1*/ 
+     /*6:1*/
       out += applyIndent(content(), "  ");
-     /*6:15*/ 
+     /*6:15*/
       out +="\n</div>";
      return out;
    },
-   compile: function() {
-   this.parent = "PanelHeading.nhtml";
+   compile: function() {  this.parent = "PanelHeading.nhtml";
    this.mergeParent(this.factory.ensure(this.parent))
    },
  }
  ;
-})();
+})();;

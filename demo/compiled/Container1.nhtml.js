@@ -1,21 +1,19 @@
-module.exports = {
-   script: function (context, _content, partial){
+module.exports = 
+ {
+   script: function (obj, _content, partial){
      function content(blockName) {
-       return _content(blockName, context, content, partial);
+       return _content(blockName, obj, content, partial);
      }
      var out = '';
      
-     
-     /*8:1*/ 
+     /*9:1*/
       out += content();
      
      return out;
    },
    blocks : {
-     "header": function(context,  _content, partial){
+     "header": function(obj,  _content, partial){
        var out = '';
-       
-       
        function applyIndent(str, _indent) {
          var indent = '';
          if (typeof _indent == 'number' && _indent > 0) {
@@ -37,16 +35,15 @@ module.exports = {
          }
        }
        
-       /*4:1*/ 
+       /*5:1*/
         out +="<div>\n";
-       /*5:1*/ 
-        out += applyIndent(context.header, "  ");
-       /*5:20*/ 
+       /*6:1*/
+        out += applyIndent(obj.header, "  ");
+       /*6:16*/
         out +="\n</div>";
        return out;
      },
-   },  compile: function() {
-   this.aliases={};
+   },  compile: function() {  this.aliases={};
    this.aliases["head"] = "Container3.nhtml";
    this.factory.ensure("Container3.nhtml",false);
    this.parent = "Container.nhtml";

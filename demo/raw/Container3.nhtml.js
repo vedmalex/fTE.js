@@ -1,11 +1,10 @@
-module.exports = {
+module.exports = 
+ {
    script: function (context, _content, partial){
      function content(blockName) {
        return _content(blockName, context, content, partial);
      }
      var out = '';
-     
-     
      function applyIndent(str, _indent) {
        var indent = '';
        if (typeof _indent == 'number' && _indent > 0) {
@@ -27,31 +26,30 @@ module.exports = {
        }
      }
      
-     /*1:1*/ 
+     /*1:1*/
       out +="<p>";
-     /*1:4*/ 
+     /*1:4*/
       if(context == 'Santa'){
-     /*3:1*/ 
+     /*3:1*/
       out +="  Hello Dear";
-     /*3:13*/ 
+     /*3:13*/
       out += applyIndent(context, " ");
-     /*3:24*/ 
+     /*3:24*/
       out +="!";
-     /*3:25*/ 
+     /*3:25*/
      } else {
-     /*5:1*/ 
+     /*5:1*/
       out +="  Hello";
-     /*5:8*/ 
+     /*5:8*/
       out += applyIndent(context, " ");
-     /*5:19*/ 
+     /*5:19*/
       out +="!";
-     /*5:20*/ 
+     /*5:20*/
      }
-     /*7:1*/ 
+     /*7:1*/
       out +="</p>";
      return out;
    },
-   compile: function() {
-   },
+   compile: function() {  },
  }
  ;
