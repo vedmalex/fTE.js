@@ -1,7 +1,5 @@
-Line 4: Unexpected token (;
 (function(){
-  return 
- {
+  return {
    script: function (obj, _content, partial){
      function content(blockName) {
        return _content(blockName, obj, content, partial);
@@ -53,4 +51,4 @@ Line 4: Unexpected token (;
    },
  }
  ;
-})();;
+})();

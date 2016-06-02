@@ -1,5 +1,4 @@
-module.exports = 
- {
+module.exports = {
    script: function (context, _content, partial){
      function content(blockName) {
        return _content(blockName, context, content, partial);
