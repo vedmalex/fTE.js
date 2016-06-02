@@ -1,11 +1,19 @@
+<#@ context 'renderOptions' #>
+
 <#
+var blockList = renderOptions.blocks;
+var noIndent = renderOptions.noIndent;
 var needToIndent = false;
-  for (var i = 0, len = context.length; i < len; i++) {
-    if(context[i].indent){
+if(!noIndent){
+  for (var i = 0, len = blockList.length; i < len; i++) {
+    if(blockList[i].indent){
       needToIndent = true;
       break; 
     }
   }
+} else {
+  needToIndent = noIndent;
+}
 -#>
 <#if(needToIndent){ -#>
 function applyIndent(str, _indent) {
@@ -50,18 +58,19 @@ function applyIndent(str, _indent){
     return str;
   }
 }
-for (var i = 0, len = context.length; i < len; i++) {
-  var block = context[i];
+for (var i = 0, len = blockList.length; i < len; i++) {
+  var block = blockList[i];
   var content = block.content;
+  var blockIndent = block.indent && !noIndent;
   var indent = '';
-  if(block.indent){
+  if(block.indent && !noIndent){
     indent = JSON.stringify(block.indent);
 }#>
 /*#{block.line}:#{block.column}*/
 <#
   switch(block.type){
     case 'text':
-#> out +=<#if (block.indent) { -#>
+#> out +=<#if (blockIndent) { -#>
 #{JSON.stringify(applyIndent(content, block.indent))};
  <#- } else { -#>
 #{JSON.stringify(content)};
@@ -85,7 +94,7 @@ for (var i = 0, len = context.length; i < len; i++) {
 <#  
     break;
     case 'codeblock':
-#> <#if (block.indent) { -#>
+#> <#if (blockIndent) { -#>
 #{applyIndent(content, block.indent)}
 <#- } else { -#>
 #{content}

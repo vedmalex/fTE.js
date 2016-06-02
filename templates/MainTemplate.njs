@@ -9,8 +9,13 @@
     return item.name.split(',')[0].trim();
   }
 
+  function processnoIndent(item){
+    return !!item;
+  }
+
   var reqList = [];
   var contextName = 'context';
+  var noIndent = false;
   var item, directives = context.directives, extend = '';
   for (var i = 0, len = directives.length; i < len; i++) {
 
@@ -24,6 +29,9 @@
     if(item.content === 'context'){
       contextName = processContextName(item)
     }
+    if(item.content === 'noIndent'){
+      noIndent = processnoIndent(item)
+    }
   }
 -#>
 {
@@ -33,7 +41,8 @@
       return _content(blockName, ctx, content, partial);
     }
     var out = '';
-    #{partial(context.main,'codeblock')}
+    <#- var blocks = {blocks:context.main, noIndent:noIndent} -#>
+    #{partial(blocks,'codeblock')}
     return out;
   },
 <#
@@ -44,15 +53,24 @@
 <#- var blockConetxtName = contextName;
     var bdirvs = cb[cbn].directives;
     var item = bdirvs[i];
+    var blkNoIndent = false;
     for(var i = 0, len = bdirvs.length; i < len; i++){
       item = bdirvs[i];
       if(item.content === 'context'){
         blockConetxtName = processContextName(item)
       }
+      if(item.content === 'noIndent'){
+        blkNoIndent = processnoIndent(item)
+      }
     }
 -#>
     "#{cbn}": function(#{blockConetxtName},  _content, partial){
+      function content(blockName, ctx) {
+        if(ctx === undefined || ctx === null) ctx = #{contextName};
+        return _content(blockName, ctx, content, partial);
+      }
       var out = '';
+      <#- var blocks = {blocks :cb[cbn].main, noIndent:blkNoIndent} -#>
       #{partial(cb[cbn].main, 'codeblock')}
       return out;
     },

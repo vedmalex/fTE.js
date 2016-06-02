@@ -39,8 +39,12 @@ module.exports = {
         function processContextName(item) {
             return item.name.split(',')[0].trim();
         }
+        function processnoIndent(item) {
+            return !!item;
+        }
         var reqList = [];
         var contextName = 'context';
+        var noIndent = false;
         var item, directives = context.directives, extend = '';
         for (var i = 0, len = directives.length; i < len; i++) {
             item = directives[i];
@@ -53,13 +57,20 @@ module.exports = {
             if (item.content === 'context') {
                 contextName = processContextName(item);
             }
+            if (item.content === 'noIndent') {
+                noIndent = processnoIndent(item);
+            }
         }
         out += '{\n  script: function (';
         out += contextName;
         out += ', _content, partial){\n    function content(blockName, ctx) {\n      if(ctx === undefined || ctx === null) ctx =';
         out += applyIndent(contextName, ' ');
-        out += ';\n      return _content(blockName, ctx, content, partial);\n    }\n    var out = \'\';\n';
-        out += applyIndent(partial(context.main, 'codeblock'), '    ');
+        out += ';\n      return _content(blockName, ctx, content, partial);\n    }\n    var out = \'\';';
+        var blocks = {
+            blocks: context.main,
+            noIndent: noIndent
+        };
+        out += applyIndent(partial(blocks, 'codeblock'), '    ');
         out += '\n    return out;\n  },\n';
         var cb = context.block;
         if (cb) {
@@ -68,17 +79,27 @@ module.exports = {
                 var blockConetxtName = contextName;
                 var bdirvs = cb[cbn].directives;
                 var item = bdirvs[i];
+                var blkNoIndent = false;
                 for (var i = 0, len = bdirvs.length; i < len; i++) {
                     item = bdirvs[i];
                     if (item.content === 'context') {
                         blockConetxtName = processContextName(item);
+                    }
+                    if (item.content === 'noIndent') {
+                        blkNoIndent = processnoIndent(item);
                     }
                 }
                 out += '    "';
                 out += cbn;
                 out += '": function(';
                 out += blockConetxtName;
-                out += ',  _content, partial){\n      var out = \'\';\n';
+                out += ',  _content, partial){\n      function content(blockName, ctx) {\n        if(ctx === undefined || ctx === null) ctx =';
+                out += applyIndent(contextName, ' ');
+                out += ';\n        return _content(blockName, ctx, content, partial);\n      }\n      var out = \'\';';
+                var blocks = {
+                    blocks: cb[cbn].main,
+                    noIndent: blkNoIndent
+                };
                 out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
                 out += '\n      return out;\n    },\n';
             }

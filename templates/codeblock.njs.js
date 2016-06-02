@@ -1,8 +1,8 @@
 module.exports = {
-    script: function (context, _content, partial) {
+    script: function (renderOptions, _content, partial) {
         function content(blockName, ctx) {
             if (ctx === undefined || ctx === null)
-                ctx = context;
+                ctx = renderOptions;
             return _content(blockName, ctx, content, partial);
         }
         var out = '';
@@ -26,12 +26,19 @@ module.exports = {
                 return str;
             }
         }
+        out += '\n';
+        var blockList = renderOptions.blocks;
+        var noIndent = renderOptions.noIndent;
         var needToIndent = false;
-        for (var i = 0, len = context.length; i < len; i++) {
-            if (context[i].indent) {
-                needToIndent = true;
-                break;
+        if (!noIndent) {
+            for (var i = 0, len = blockList.length; i < len; i++) {
+                if (blockList[i].indent) {
+                    needToIndent = true;
+                    break;
+                }
             }
+        } else {
+            needToIndent = noIndent;
         }
         if (needToIndent) {
             out += 'function applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n';
@@ -56,11 +63,12 @@ module.exports = {
                 return str;
             }
         }
-        for (var i = 0, len = context.length; i < len; i++) {
-            var block = context[i];
+        for (var i = 0, len = blockList.length; i < len; i++) {
+            var block = blockList[i];
             var content = block.content;
+            var blockIndent = block.indent && !noIndent;
             var indent = '';
-            if (block.indent) {
+            if (block.indent && !noIndent) {
                 indent = JSON.stringify(block.indent);
             }
             out += '\n/*';
@@ -71,7 +79,7 @@ module.exports = {
             switch (block.type) {
             case 'text':
                 out += ' out +=';
-                if (block.indent) {
+                if (blockIndent) {
                     out += JSON.stringify(applyIndent(content, block.indent));
                     out += ';';
                 } else {
@@ -107,7 +115,7 @@ module.exports = {
                 }
                 break;
             case 'codeblock':
-                if (block.indent) {
+                if (blockIndent) {
                     out += applyIndent(content, block.indent);
                 } else {
                     out += content;
