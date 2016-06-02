@@ -2,8 +2,9 @@
 <#@ requireAs ('Container3.nhtml', 'head') #>
 <#@ context 'obj' #>
 <# block 'header' : -#>
+  <#@ context 'head' #>
 <div>
-  #{obj.header}
+  #{head.header}
 </div>
 <#- end -#>
 #{content()}

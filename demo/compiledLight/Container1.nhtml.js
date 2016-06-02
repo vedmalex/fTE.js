@@ -7,13 +7,13 @@
      }
      var out = '';
      
-     /*9:1*/
+     /*10:1*/
       out += content();
      
      return out;
    },
    blocks : {
-     "header": function(obj,  _content, partial){
+     "header": function(head,  _content, partial){
        var out = '';
        function applyIndent(str, _indent) {
          var indent = '';
@@ -36,11 +36,11 @@
          }
        }
        
-       /*5:1*/
-        out +="<div>\n";
        /*6:1*/
-        out += applyIndent(obj.header, "  ");
-       /*6:16*/
+        out +="<div>\n";
+       /*7:1*/
+        out += applyIndent(head.header, "  ");
+       /*7:17*/
         out +="\n</div>";
        return out;
      },
