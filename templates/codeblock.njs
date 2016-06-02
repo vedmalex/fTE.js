@@ -1,5 +1,5 @@
 <#@ context 'renderOptions' #>
-
+<#@ noIndent #>
 <#
 var blockList = renderOptions.blocks;
 var noIndent = renderOptions.noIndent;
@@ -12,7 +12,7 @@ if(!noIndent){
     }
   }
 } else {
-  needToIndent = noIndent;
+  needToIndent = !noIndent;
 }
 -#>
 <#if(needToIndent){ -#>

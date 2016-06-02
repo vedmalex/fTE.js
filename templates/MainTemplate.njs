@@ -71,7 +71,7 @@
       }
       var out = '';
       <#- var blocks = {blocks :cb[cbn].main, noIndent:blkNoIndent} -#>
-      #{partial(cb[cbn].main, 'codeblock')}
+      #{partial(blocks, 'codeblock')}
       return out;
     },
 <#      }-#>

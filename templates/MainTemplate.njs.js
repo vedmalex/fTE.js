@@ -100,7 +100,7 @@ module.exports = {
                     blocks: cb[cbn].main,
                     noIndent: blkNoIndent
                 };
-                out += applyIndent(partial(cb[cbn].main, 'codeblock'), '      ');
+                out += applyIndent(partial(blocks, 'codeblock'), '      ');
                 out += '\n      return out;\n    },\n';
             }
             out += '  },';
