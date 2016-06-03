@@ -15,6 +15,24 @@ if(!noIndent){
   needToIndent = !noIndent;
 }
 -#>
+var escapeExp = /[&<>"'`]/,
+    escapeAmpExp = /&/g,
+    escapeLtExp = /</g,
+    escapeGtExp = />/g,
+    escapeQuotExp = /"/g,
+    escapeSingleQuteExp = /'/g,
+    escapeApostropheExp = /`/g,
+    escapeQuotExp = /"/g;
+function escapeIt (text) {
+  if (text == null) {
+    return '';
+  }
+  var result = text.toString();
+  if (!escapeExp.test(result)) {
+    return result;
+  }
+  return result.replace(escapeAmpExp, '&#38;').replace(escapeLtExp, '&#60;').replace(escapeGtExp, '&#62;').replace(escapeQuotExp, '&#34;').replace(escapeSingleQuteExp, '&#39;').replace(escapeApostropheExp, '&#96;');
+};
 <#if(needToIndent){ -#>
 function applyIndent(str, _indent) {
   var indent = '';
@@ -81,11 +99,11 @@ for (var i = 0, len = blockList.length; i < len; i++) {
     break;
     case 'uexpression':
 #> out +=<#if (indent && !noIndent) { -#>
-applyIndent(escape(#{content}), #{indent});
+applyIndent(escapeIt(#{content}), #{indent});
 <#- } else if(indent){ -#>
-#{indent} + escape(#{content});
+#{indent} + escapeIt(#{content});
 <#- } else { -#>
-escape(#{content});
+escapeIt(#{content});
 <#- } -#>
 <#  
     break;

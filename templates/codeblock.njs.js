@@ -6,6 +6,17 @@ module.exports = {
             return _content(blockName, ctx, content, partial);
         }
         var out = '';
+        var escapeExp = /[&<>"'`]/, escapeAmpExp = /&/g, escapeLtExp = /</g, escapeGtExp = />/g, escapeQuotExp = /"/g, escapeSingleQuteExp = /'/g, escapeApostropheExp = /`/g, escapeQuotExp = /"/g;
+        function escapeIt(text) {
+            if (text == null) {
+                return '';
+            }
+            var result = text.toString();
+            if (!escapeExp.test(result)) {
+                return result;
+            }
+            return result.replace(escapeAmpExp, '&#38;').replace(escapeLtExp, '&#60;').replace(escapeGtExp, '&#62;').replace(escapeQuotExp, '&#34;').replace(escapeSingleQuteExp, '&#39;').replace(escapeApostropheExp, '&#96;');
+        }
         var blockList = renderOptions.blocks;
         var noIndent = renderOptions.noIndent;
         var needToIndent = false;
@@ -19,6 +30,7 @@ module.exports = {
         } else {
             needToIndent = !noIndent;
         }
+        out += 'var escapeExp = /[&<>"\'`]/,\n    escapeAmpExp = /&/g,\n    escapeLtExp = /</g,\n    escapeGtExp = />/g,\n    escapeQuotExp = /"/g,\n    escapeSingleQuteExp = /\'/g,\n    escapeApostropheExp = /`/g,\n    escapeQuotExp = /"/g;\nfunction escapeIt (text) {\n  if (text == null) {\n    return \'\';\n  }\n  var result = text.toString();\n  if (!escapeExp.test(result)) {\n    return result;\n  }\n  return result.replace(escapeAmpExp, \'&#38;\').replace(escapeLtExp, \'&#60;\').replace(escapeGtExp, \'&#62;\').replace(escapeQuotExp, \'&#34;\').replace(escapeSingleQuteExp, \'&#39;\').replace(escapeApostropheExp, \'&#96;\');\n};\n';
         if (needToIndent) {
             out += 'function applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n';
         }
@@ -74,18 +86,18 @@ module.exports = {
             case 'uexpression':
                 out += ' out +=';
                 if (indent && !noIndent) {
-                    out += 'applyIndent(escape(';
+                    out += 'applyIndent(escapeIt(';
                     out += content;
                     out += '),';
                     out += ' ' + indent;
                     out += ');';
                 } else if (indent) {
                     out += indent;
-                    out += ' + escape(';
+                    out += ' + escapeIt(';
                     out += content;
                     out += ');';
                 } else {
-                    out += 'escape(';
+                    out += 'escapeIt(';
                     out += content;
                     out += ');';
                 }
