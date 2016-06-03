@@ -4,50 +4,50 @@ module.exports = {
        if(ctx === undefined || ctx === null) ctx = context;
        return _content(blockName, ctx, content, partial);
      }
-     var out = '';
-     function applyIndent(str, _indent) {
-       var indent = '';
-       if (typeof _indent == 'number' && _indent > 0) {
-         var res = '';
-         for (var i = 0; i < _indent; i++) {
-           res += ' ';
-         }
-         indent = res;
-       }
-       if (typeof _indent == 'string' && _indent.length > 0) {
-         indent = _indent;
-       }
-       if (indent && str) {
-         return str.split('\n').map(function (s) {
-             return indent + s;
-         }).join('\n');
-       } else {
-         return str;
-       }
-     }
+     var out = '';    var escapeExp = /[&<>"]/,
+         escapeAmpExp = /&/g,
+         escapeLtExp = /</g,
+         escapeGtExp = />/g,
+         escapeQuotExp = /"/g;
      
-     /*1:1*/
-      out +="<p>";
-     /*1:4*/
-      if(context == 'Santa'){
-     /*3:1*/
-      out +="  Hello Dear";
-     /*3:13*/
-      out += applyIndent(context, " ");
-     /*3:24*/
-      out +="!";
-     /*3:25*/
-     } else {
+     function escapeIt (text) {
+       if (text == null) {
+         return '';
+       }
+       
+       var result = text.toString();
+       if (!escapeExp.test(result)) {
+         return result;
+       }
+     
+       return result.replace(escapeAmpExp, '&amp;')
+       .replace(escapeLtExp, '&lt;')
+       .replace(escapeGtExp, '&gt;')
+       .replace(escapeQuotExp, '&quot;');
+     };
+     
+     /*2:1*/
+      out +="<div>\n  <p>\n";
+     /*4:1*/
+        if(context == 'Santa'){
      /*5:1*/
-      out +="  Hello";
-     /*5:8*/
-      out += applyIndent(context, " ");
-     /*5:19*/
+      out +="    Hello Dear";
+     /*5:15*/
+      out +=" " + context;
+     /*5:26*/
       out +="!";
-     /*5:20*/
-     }
+     /*5:27*/
+     } else {
      /*7:1*/
-      out +="</p>";
+      out +="    Hello";
+     /*7:10*/
+      out +=" " + context;
+     /*7:21*/
+      out +="!";
+     /*7:22*/
+     }
+     /*8:9*/
+      out +="\n  </p>\n</div>\n";
      return out;
    },
    compile: function() {  },

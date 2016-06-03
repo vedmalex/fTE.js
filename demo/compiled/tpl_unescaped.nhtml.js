@@ -1,8 +1,7 @@
-(function(){
-  return {
-   script: function (context, _content, partial){
+module.exports = {
+   script: function (data, _content, partial){
      function content(blockName, ctx) {
-       if(ctx === undefined || ctx === null) ctx = context;
+       if(ctx === undefined || ctx === null) ctx = data;
        return _content(blockName, ctx, content, partial);
      }
      var out = '';    var escapeExp = /[&<>"]/,
@@ -48,20 +47,54 @@
      }
      
      /*2:1*/
-      out +="<div>\n";
-     /*3:1*/
-      out +=applyIndent(content('header', context.head), "  ");
-     /*3:37*/
-      out +="\n</div>\n<div>\n";
-     /*6:1*/
-      out +=applyIndent(content(), "  ");
-     /*6:15*/
-      out +="\n</div>";
+      out +="<html>\n\t<head>\n\t\t<title>";
+     /*4:10*/
+      out +=data.title;
+     
+     /*4:23*/
+      out +="</title>\n\t</head>\n\t<body>\n\t\t<p>";
+     /*7:6*/
+      out +=data.text;
+     
+     /*7:18*/
+      out +="</p>\n";
+     /*8:1*/
+     		 if (data.projects.length) { 
+     /*8:36*/
+      out +="\n";
+     /*9:1*/
+     			 for (var i = 0; i < data.projects.length; i++) { 
+     /*9:58*/
+      out +="\n\t\t\t\t<a href=\"";
+     /*10:14*/
+      out +=data.projects[i].url;
+     
+     /*10:37*/
+      out +="\">";
+     /*10:39*/
+      out +=data.projects[i].name;
+     
+     /*10:63*/
+      out +="</a>\n\t\t\t\t<p>";
+     /*11:8*/
+      out +=data.projects[i].description;
+     
+     /*11:39*/
+      out +="</p>\n";
+     /*12:1*/
+     			 } 
+     /*12:11*/
+      out +="\n";
+     /*13:1*/
+     		 } else { 
+     /*13:17*/
+      out +="\n\t\t\tNo projects\n";
+     /*15:1*/
+     		 } 
+     /*15:10*/
+      out +="\n\t</body>\n</html>";
      return out;
    },
-   compile: function() {  this.parent = "PanelHeading.nhtml";
-   this.mergeParent(this.factory.ensure(this.parent))
-   },
+   compile: function() {  },
  }
  ;
-})();
