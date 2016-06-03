@@ -334,18 +334,18 @@
     ], 
     "repository": {
          "embedded-unescaped":{ "name": "source.js.embedded.unescaped.js",
-          "begin": "#\\{",
+          "begin": "[!#]\\{",
           "patterns": [
               { "include": "text.source.js" }
            ],
            "end": "\\}"
         },
         "embedded-codeblock":{ "name": "source.js.embedded.codeblock.js",
-          "begin": "<#",
+          "begin": "<#-?",
           "patterns": [
               { "include": "text.source.js" }
            ],
-           "end": "#>"
+           "end": "-?#>"
         },
         "embedded-code": {
             "patterns": [

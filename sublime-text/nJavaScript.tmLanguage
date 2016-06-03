@@ -741,9 +741,9 @@
 		<key>embedded-codeblock</key>
 		<dict>
 			<key>begin</key>
-			<string>&lt;#</string>
+			<string>&lt;#-?</string>
 			<key>end</key>
-			<string>#&gt;</string>
+			<string>-?#&gt;</string>
 			<key>name</key>
 			<string>source.js.embedded.codeblock.js</string>
 			<key>patterns</key>
@@ -757,7 +757,7 @@
 		<key>embedded-unescaped</key>
 		<dict>
 			<key>begin</key>
-			<string>#\{</string>
+			<string>[!#]\{</string>
 			<key>end</key>
 			<string>\}</string>
 			<key>name</key>
