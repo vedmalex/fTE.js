@@ -44,7 +44,7 @@ it is build using [pegjs](https://github.com/pegjs/pegjs)
 <# block 'name': #>
 <# end #>
 
-  <head>```  
+```  
 
 to render block
 `#{content('codeblock')}}`
