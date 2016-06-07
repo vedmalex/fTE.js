@@ -87,11 +87,16 @@ module.exports = {
         out +="\n</div>";
        return out;
      },
-   },  compile: function() {  this.aliases={};
-   this.aliases["head"] = "Container3.nhtml";
-   this.factory.ensure("Container3.nhtml",false);
-   this.parent = "Container.nhtml";
-   this.mergeParent(this.factory.ensure(this.parent))
+   },  compile: function() {    this.aliases={};
+     this.aliases["head"] = "Container3.nhtml";
+     this.factory.ensure("Container3.nhtml");
+ 
+     this.parent = "Container.nhtml";
+     this.mergeParent(this.factory.ensure(this.parent))
    },
+   dependency: {
+     "Container.nhtml": 1,
+     "Container3.nhtml": 1,
+   }
  }
  ;

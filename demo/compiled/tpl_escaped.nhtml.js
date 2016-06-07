@@ -87,5 +87,7 @@ module.exports = {
      return out;
    },
    compile: function() {  },
+   dependency: {
+   }
  }
  ;

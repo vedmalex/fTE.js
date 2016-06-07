@@ -48,14 +48,21 @@
      }
      
      /*1:1*/
-      out +="<div class=\"panel-heading\">\n  <h3 class=\"panel-title\">\n";
+      out +="<div class=\"panel-heading\">\n  <h3 class=\"panel-title\">";
+     /*2:27*/
+      out +=context.title;
+     
+     /*2:43*/
+      out +="</h3>\n";
      /*3:1*/
-      out +=applyIndent(content(), "    ");
-     /*3:17*/
-      out +="\n  </h3> \n</div>";
+      out +=applyIndent(content(), "  ");
+     /*3:15*/
+      out +="\n</div>";
      return out;
    },
    compile: function() {  },
+   dependency: {
+   }
  }
  ;
 })();

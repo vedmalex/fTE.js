@@ -8,7 +8,7 @@ function load(fileName, folder, compile, optimize) {
 	var fn = path.resolve(fileName);
 	if (fs.existsSync(fn)) {
 		var content = fs.readFileSync(fn);
-		var result = compile(content, false);
+		var result = compile(content, optimize);
 		fs.writeFileSync(path.join(folder, path.basename(fileName) + '.js'), result);
 	}
 }

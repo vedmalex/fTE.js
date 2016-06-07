@@ -52,6 +52,8 @@
      return out;
    },
    compile: function() {  },
+   dependency: {
+   }
  }
  ;
 })();

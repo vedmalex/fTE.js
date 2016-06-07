@@ -59,9 +59,13 @@
       out +="\n</div>";
      return out;
    },
-   compile: function() {  this.parent = "PanelHeading.nhtml";
-   this.mergeParent(this.factory.ensure(this.parent))
+   compile: function() {
+     this.parent = "PanelHeading.nhtml";
+     this.mergeParent(this.factory.ensure(this.parent))
    },
+   dependency: {
+     "PanelHeading.nhtml": 1,
+   }
  }
  ;
 })();

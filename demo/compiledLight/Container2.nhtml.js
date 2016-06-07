@@ -40,9 +40,13 @@
       out +="\n\n!!! работает... даже если partial определен в базовом шаблоне... !!!";
      return out;
    },
-   compile: function() {  this.parent = "Container1.nhtml";
-   this.mergeParent(this.factory.ensure(this.parent))
+   compile: function() {
+     this.parent = "Container1.nhtml";
+     this.mergeParent(this.factory.ensure(this.parent))
    },
+   dependency: {
+     "Container1.nhtml": 1,
+   }
  }
  ;
 })();
