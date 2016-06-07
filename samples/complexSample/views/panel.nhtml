@@ -1,3 +1,4 @@
+<#@ alias "panel" #>
 <#@ context 'panel' #>
 <#- block 'title' : -#>
 <#@ context 'title' #>
