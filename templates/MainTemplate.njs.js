@@ -118,35 +118,35 @@ module.exports = {
     }
     out += '  compile: function() {';
     if (reqList.length > 0) {
-      out += '  this.aliases={};\n';
+      out += '    this.aliases={};\n';
       var rq;
       for (var i = 0, len = reqList.length; i < len; i++) {
         rq = reqList[i];
-        out += '  this.aliases["';
+        out += '    this.aliases["';
         out += rq.alias;
         out += '"] = "';
         out += rq.name;
-        out += '";\n  this.factory.ensure("';
+        out += '";\n    this.factory.ensure("';
         out += rq.name;
         out += '");\n'
       }
     }
     if (extend) {
-      out += '  this.parent =';
+      out += '\n    this.parent =';
       out += applyIndent(JSON.stringify(extend), ' ');
-      out += ';\n  this.mergeParent(this.factory.ensure(this.parent))\n'
+      out += ';\n    this.mergeParent(this.factory.ensure(this.parent))\n'
     }
-    out += '  },\n  dependency:{';
+    out += '  },\n  dependency: {\n';
     if (extend) {
       out += applyIndent(JSON.stringify(extend), '    ');
-      out += ':1,\n'
+      out += ': 1,\n'
     }
     if (reqList.length > 0) {
       for (var i = 0, len = reqList.length; i < len; i++) {
         rq = reqList[i];
-        out += '  "';
+        out += '    "';
         out += rq.name;
-        out += '":1,\n'
+        out += '": 1,\n'
       }
     }
     out += '  }\n}\n';

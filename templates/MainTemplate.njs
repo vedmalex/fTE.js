@@ -80,31 +80,31 @@
 <#-  } -#>
   compile: function() {
 <#-  if(reqList.length > 0) { -#> 
-  this.aliases={};
+    this.aliases={};
 <# var rq;
   for (var i = 0, len = reqList.length; i < len; i++) {
     rq = reqList[i]; 
 -#> 
-  this.aliases["#{rq.alias}"] = "#{rq.name}";
-  this.factory.ensure("#{rq.name}");
+    this.aliases["#{rq.alias}"] = "#{rq.name}";
+    this.factory.ensure("#{rq.name}");
 <#
   }
 }-#>
 
-<#-if(extend) {-#>
-  this.parent = #{JSON.stringify(extend)};
-  this.mergeParent(this.factory.ensure(this.parent))
+<#-if(extend) {#>
+    this.parent = #{JSON.stringify(extend)};
+    this.mergeParent(this.factory.ensure(this.parent))
 <#}-#>
   },
-  dependency:{
-  <#-if(extend) {-#>
-    #{JSON.stringify(extend)}:1,
-  <#}-#>
-<#-  if(reqList.length > 0) {
+  dependency: {
+  <# if(extend) {-#>
+    #{JSON.stringify(extend)}: 1,
+  <# }-#>
+<#- if(reqList.length > 0) {
   for (var i = 0, len = reqList.length; i < len; i++) {
     rq = reqList[i]; 
 -#> 
-  "#{rq.name}":1,
+    "#{rq.name}": 1,
 <#
   }
 }-#>
