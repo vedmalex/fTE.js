@@ -1,0 +1,9 @@
+<#@ extend 'template.nhtml' #>
+<#@ requireAs ('panel.nhtml', 'panel') #>
+<section>
+  #{partial(context, 'panel')}
+</section>
+<section>
+<# var extra = { title: 'Another panel', body:'extra content'}#>
+  #{partial(extra, 'panel')}
+</section>
