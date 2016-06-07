@@ -17,6 +17,7 @@
   var reqList = [];
   var contextName = 'context';
   var noIndent = false;
+  var alias = '';
   var item, directives = context.directives, extend = '';
   for (var i = 0, len = directives.length; i < len; i++) {
 
@@ -33,9 +34,15 @@
     if(item.content === 'noIndent'){
       noIndent = processnoIndent(item)
     }
+    if(item.content === 'alias'){
+      alias = JSON.stringify(item.name.trim());
+    }
   }
 -#>
-{
+{ 
+<#- if(alias){
+#> alias: #{alias},
+<#- }-#>
   script: function (#{contextName}, _content, partial){
     function content(blockName, ctx) {
       if(ctx === undefined || ctx === null) ctx = #{contextName};
@@ -79,6 +86,9 @@
   },
 <#-  } -#>
   compile: function() {
+<#- if(alias){#>
+    this.alias = #{alias};
+<#- }-#>
 <#-  if(reqList.length > 0) { -#> 
     this.aliases={};
 <# var rq;

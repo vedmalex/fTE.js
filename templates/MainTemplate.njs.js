@@ -56,6 +56,7 @@ module.exports = {
     var reqList = [];
     var contextName = 'context';
     var noIndent = false;
+    var alias = '';
     var item, directives = context.directives, extend = '';
     for (var i = 0, len = directives.length; i < len; i++) {
       item = directives[i];
@@ -71,8 +72,17 @@ module.exports = {
       if (item.content === 'noIndent') {
         noIndent = processnoIndent(item)
       }
+      if (item.content === 'alias') {
+        alias = JSON.stringify(item.name.trim())
+      }
     }
-    out += '{\n  script: function (';
+    out += '{ ';
+    if (alias) {
+      out += ' alias:';
+      out += applyIndent(alias, ' ');
+      out += ','
+    }
+    out += '  script: function (';
     out += contextName;
     out += ', _content, partial){\n    function content(blockName, ctx) {\n      if(ctx === undefined || ctx === null) ctx =';
     out += applyIndent(contextName, ' ');
@@ -117,6 +127,11 @@ module.exports = {
       out += '  },'
     }
     out += '  compile: function() {';
+    if (alias) {
+      out += '\n    this.alias =';
+      out += applyIndent(alias, ' ');
+      out += ';'
+    }
     if (reqList.length > 0) {
       out += '    this.aliases={};\n';
       var rq;
