@@ -2,7 +2,7 @@
 <#-
   function processRequire(item){
     var requires = item.name.split(',').map(function(i){return i.trim()});
-    return {name:requires[0], alias:requires[1], absPath:Boolean(requires[2])};
+    return {name:requires[0], alias:requires[1]};
   }
 
   function processContextName(item){
@@ -13,6 +13,7 @@
     return !!item;
   }
 
+  var templateAlias = '';
   var reqList = [];
   var contextName = 'context';
   var noIndent = false;
@@ -85,16 +86,27 @@
     rq = reqList[i]; 
 -#> 
   this.aliases["#{rq.alias}"] = "#{rq.name}";
-  this.factory.ensure("#{rq.name}", #{rq.absPath});
+  this.factory.ensure("#{rq.name}");
 <#
   }
 }-#>
 
 <#-if(extend) {-#>
   this.parent = #{JSON.stringify(extend)};
-<#}-#>
-<#if(extend) {-#>
   this.mergeParent(this.factory.ensure(this.parent))
 <#}-#>
   },
+  dependency:{
+  <#-if(extend) {-#>
+    #{JSON.stringify(extend)}:1,
+  <#}-#>
+<#-  if(reqList.length > 0) {
+  for (var i = 0, len = reqList.length; i < len; i++) {
+    rq = reqList[i]; 
+-#> 
+  "#{rq.name}":1,
+<#
+  }
+}-#>
+  }
 }
