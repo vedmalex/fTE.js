@@ -11,6 +11,7 @@ it is build using [pegjs](https://github.com/pegjs/pegjs)
   - partials
   - partial aliases
   - directives
+  - progressing template caching
   - smart block indentation
   - multiple root folders
   - pure javascript code
@@ -46,7 +47,7 @@ it is build using [pegjs](https://github.com/pegjs/pegjs)
 
 ```  
 
-to render block
+To render block
 `#{content('codeblock')}}`
 `#{content('codeblock', context)}}`
 
@@ -118,7 +119,96 @@ Unespaced output from `tempalte-benchamrk`
 </html>
 ```
 
+## Usage on node.js
 
+###install 
+
+`npm install fte.js --save`
+
+### use
+
+```javascript
+
+var fte = require('fte.js').Factory;
+var tempaltes = new fte({
+  root:['tempaltes','other templates'],
+  watch: false // progressive template caching disabled;
+});
+
+var result = tempaltes.run({hello:'World'}, 'tempalteName');
+
+```
+### API
+
+`Factory` - template Factory iteself
+
+`compileLight` - generate template as closure function.
+`compileFull` - generate template as module.
+
+method signature `(content:string[, optimize:bool])`
+
+it accept tempalte code and return function code to be used within `fte.js` Factory.
+
+`optimize`-option will run esmangle over the code with thwo options:
+'remove-empty-statement' and 'remove-unreachable-branch'.
+You alwais can build yout own compiler, just see the source.
+
+### expression blocks
+
+Both of them is used only to displaying the data.
+so didn't use them to prepare complex values
+
+```
+#{ partial({some:another},'partial')} // this will drive to error;
+```
+instad of it 
+
+```
+<# var extra = {some:another} #>
+#{ partial(extra,'partial')} // this will drive to error;
+```
+
+
+### codeblocks
+  
+The codeblock is a part of the tempalte that you want to reuse multiple times, with different context. It is just like a partials, but with different behaviours.
+
+Block can be overriden during inheritance,
+
+directives in next blocks: `context` and `noIndent`.
+
+### inheritance
+
+to inherite from other template please ensure that it has a content-call `#{content()}`
+during inheritance you can override and reuse in resulting tempalte all the things:
+
+- reuse required templates with its aliase
+- override partials that ws required with parent templates
+- reuse defined block
+- override template blocks
+
+base.html
+```
+<div class="panel-heading">
+  <h3 class="panel-title">#{context.title}</h3>
+  #{content()}
+</div>
+
+```
+
+container.html
+```
+<#@ extend 'base.html' #>
+<div>
+  #{content('header', context.head)}
+</div>
+<div>
+  #{content()}
+</div>
+```
+## Progresinve template caching
+
+by setup `watch:true` in configuration of fte factory, you can achieve progressive tamplate caching. Factory will watch for changing files and it any changes appering in the already loaded files it will reset cache options for it. So in the next time, when changed template will be used it will load new version of template and recomplile it. The main feature is that if the template has any dependency then if one of its dependency is changed this template will also removed from cache. 
 
 ## Speed Test 
 I've posted result here.
@@ -210,4 +300,3 @@ Nodejs v6.21
   Escaped   : 15158ms
   Unescaped : 11153ms
   Total     : 26311ms
-
