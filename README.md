@@ -22,6 +22,7 @@ it is build using [pegjs](https://github.com/pegjs/pegjs)
   - one of the fastest tempalte code geneation
   - simple code generation for template engine - it is genereate itself using fTE.js
   - syntax highlight for sublime-text
+  - factory-level aliases global aliases
 
 ## Syntax
 
@@ -72,9 +73,13 @@ Syntax
 
 - `context 'name` | `context('name')` -- set up default context name for generated code.
 
+- `alias 'name` | `alias('name')` -- setup global alias name from
+
 - `extend 'alias|templatePath'` - inherite from specified template
 
 ## Samples
+
+For more copmplex example see `sample/complexSample` folder in project root
 
 Escapes output from `template-benchamrk`
 
@@ -168,6 +173,19 @@ instad of it
 #{ partial(extra,'partial')} // this will drive to error;
 ```
 
+### factory level aliases
+
+Factory must be configured to scan over all files to load all templates and extract all aliases
+
+```
+var fte = require('fte.js').Factory;
+var tempaltes = new fte({
+  root:['tempaltes','other templates'],
+  watch: false, // progressive template caching disabled;
+  preload: true, // be default it aliases available only after manual loading.
+  ext: ['.nhtml', 'njs'], // lis of extentions that is available for file search.
+});
+```
 
 ### codeblocks
   
