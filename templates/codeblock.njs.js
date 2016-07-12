@@ -30,11 +30,12 @@ module.exports = {
     } else {
       needToIndent = !noIndent
     }
-    out += 'var escapeExp = /[&<>"]/,\n    escapeAmpExp = /&/g,\n    escapeLtExp = /</g,\n    escapeGtExp = />/g,\n    escapeQuotExp = /"/g;\n\nfunction escapeIt (text) {\n  if (text == null) {\n    return \'\';\n  }\n  \n  var result = text.toString();\n  if (!escapeExp.test(result)) {\n    return result;\n  }\n\n  return result.replace(escapeAmpExp, \'&amp;\')\n  .replace(escapeLtExp, \'&lt;\')\n  .replace(escapeGtExp, \'&gt;\')\n  .replace(escapeQuotExp, \'&quot;\');\n};\n';
+    out += 'var escapeExp = /[&<>"]/,\n    escapeAmpExp = /&/g,\n    escapeLtExp = /</g,\n    escapeGtExp = />/g,\n    escapeQuotExp = /"/g;\n\nfunction escapeIt (text) {\n  if (text == null) {\n    return \'\';\n  }\n\n  var result = text.toString();\n  if (!escapeExp.test(result)) {\n    return result;\n  }\n\n  return result.replace(escapeAmpExp, \'&amp;\')\n  .replace(escapeLtExp, \'&lt;\')\n  .replace(escapeGtExp, \'&gt;\')\n  .replace(escapeQuotExp, \'&quot;\');\n};\n';
     if (needToIndent) {
-      out += 'function applyIndent(str, _indent) {\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n'
+      out += 'function applyIndent(_str, _indent) {\n  var str = String(_str);\n  var indent = \'\';\n  if (typeof _indent == \'number\' && _indent > 0) {\n    var res = \'\';\n    for (var i = 0; i < _indent; i++) {\n      res += \' \';\n    }\n    indent = res;\n  }\n  if (typeof _indent == \'string\' && _indent.length > 0) {\n    indent = _indent;\n  }\n  if (indent && str) {\n    return str.split(\'\\n\').map(function (s) {\n        return indent + s;\n    }).join(\'\\n\');\n  } else {\n    return str;\n  }\n}\n'
     }
-    function applyIndent(str, _indent) {
+    function applyIndent(_str, _indent) {
+      var str = String(_str);
       var indent = '';
       if (typeof _indent == 'number' && _indent > 0) {
         var res = '';

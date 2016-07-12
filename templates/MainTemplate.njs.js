@@ -17,7 +17,8 @@ module.exports = {
       }
       return result.replace(escapeAmpExp, '&amp;').replace(escapeLtExp, '&lt;').replace(escapeGtExp, '&gt;').replace(escapeQuotExp, '&quot;')
     }
-    function applyIndent(str, _indent) {
+    function applyIndent(_str, _indent) {
+      var str = String(_str);
       var indent = '';
       if (typeof _indent == 'number' && _indent > 0) {
         var res = '';
@@ -49,6 +50,9 @@ module.exports = {
     function processContextName(item) {
       return item.name.split(',')[0].trim()
     }
+    function processAsync(item) {
+      return item.name.split(',')[0].trim()
+    }
     function processnoIndent(item) {
       return !!item
     }
@@ -57,6 +61,7 @@ module.exports = {
     var contextName = 'context';
     var noIndent = false;
     var alias = '';
+    var asyncType = '';
     var item, directives = context.directives, extend = '';
     for (var i = 0, len = directives.length; i < len; i++) {
       item = directives[i];
@@ -74,6 +79,9 @@ module.exports = {
       }
       if (item.content === 'alias') {
         alias = JSON.stringify(item.name.trim())
+      }
+      if (item.content === 'async') {
+        asyncType = processAsync(item)
       }
     }
     out += '{ ';
@@ -101,6 +109,7 @@ module.exports = {
         var bdirvs = cb[cbn].directives;
         var item = bdirvs[i];
         var blkNoIndent = false;
+        var blAsyncType = '';
         for (var i = 0, len = bdirvs.length; i < len; i++) {
           item = bdirvs[i];
           if (item.content === 'context') {
@@ -108,6 +117,9 @@ module.exports = {
           }
           if (item.content === 'noIndent') {
             blkNoIndent = processnoIndent(item)
+          }
+          if (item.content === 'async') {
+            blAsyncType = processAsync(item)
           }
         }
         out += '    "';

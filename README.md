@@ -41,7 +41,7 @@ it is build using [pegjs](https://github.com/pegjs/pegjs)
 - `<#@ #>` directive block, by default it ommits all spaces and new lines, as if it is never exists.
 
 - Template block
-   
+
 ```
 <# block 'name': #>
 <# end #>
@@ -52,12 +52,12 @@ To render block
 `#{content('codeblock')}}`
 `#{content('codeblock', context)}}`
 
-- partial 
+- partial
   #{partial(blocks,'codeblock')}}
 
 ## Directives
 
-Syntax 
+Syntax
 
 `<#@ directiveName ("params", "params", "params") #>`
 
@@ -126,7 +126,7 @@ Unespaced output from `tempalte-benchamrk`
 
 ## Usage on node.js
 
-###install 
+###install
 
 `npm install fte.js --save`
 
@@ -166,11 +166,11 @@ so didn't use them to prepare complex values
 ```
 #{ partial({some:another},'partial')} // this will drive to error;
 ```
-instad of it 
+instad of it
 
 ```
 <# var extra = {some:another} #>
-#{ partial(extra,'partial')} // this will drive to error;
+#{ partial(extra,'partial')} // this will not drive to error;
 ```
 
 ### factory level aliases
@@ -188,7 +188,7 @@ var tempaltes = new fte({
 ```
 
 ### codeblocks
-  
+
 The codeblock is a part of the tempalte that you want to reuse multiple times, with different context. It is just like a partials, but with different behaviours.
 
 Block can be overriden during inheritance,
@@ -226,9 +226,9 @@ container.html
 ```
 ## Progresinve template caching
 
-by setup `watch:true` in configuration of fte factory, you can achieve progressive tamplate caching. Factory will watch for changing files and it any changes appering in the already loaded files it will reset cache options for it. So in the next time, when changed template will be used it will load new version of template and recomplile it. The main feature is that if the template has any dependency then if one of its dependency is changed this template will also removed from cache. 
+by setup `watch:true` in configuration of fte factory, you can achieve progressive tamplate caching. Factory will watch for changing files and it any changes appering in the already loaded files it will reset cache options for it. So in the next time, when changed template will be used it will load new version of template and recomplile it. The main feature is that if the template has any dependency then if one of its dependency is changed this template will also removed from cache.
 
-## Speed Test 
+## Speed Test
 I've posted result here.
 the only difference in speed is the escape function.
 [template-benchamrk](https://github.com/vedmalex/template-benchmark)

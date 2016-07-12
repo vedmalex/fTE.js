@@ -9,6 +9,10 @@
     return item.name.split(',')[0].trim();
   }
 
+  function processAsync(item){
+    return item.name.split(',')[0].trim();
+  }
+
   function processnoIndent(item){
     return !!item;
   }
@@ -18,6 +22,7 @@
   var contextName = 'context';
   var noIndent = false;
   var alias = '';
+  var asyncType = '';
   var item, directives = context.directives, extend = '';
   for (var i = 0, len = directives.length; i < len; i++) {
 
@@ -36,6 +41,9 @@
     }
     if(item.content === 'alias'){
       alias = JSON.stringify(item.name.trim());
+    }
+    if(item.content === 'async'){
+      asyncType = processAsync(item);
     }
   }
 -#>
@@ -62,6 +70,7 @@
     var bdirvs = cb[cbn].directives;
     var item = bdirvs[i];
     var blkNoIndent = false;
+    var blAsyncType = '';
     for(var i = 0, len = bdirvs.length; i < len; i++){
       item = bdirvs[i];
       if(item.content === 'context'){
@@ -69,6 +78,9 @@
       }
       if(item.content === 'noIndent'){
         blkNoIndent = processnoIndent(item)
+      }
+      if(item.content === 'async'){
+        blAsyncType = processAsync(item);
       }
     }
 -#>

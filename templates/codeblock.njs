@@ -8,7 +8,7 @@ if(!noIndent){
   for (var i = 0, len = blockList.length; i < len; i++) {
     if(blockList[i].indent){
       needToIndent = true;
-      break; 
+      break;
     }
   }
 } else {
@@ -25,7 +25,7 @@ function escapeIt (text) {
   if (text == null) {
     return '';
   }
-  
+
   var result = text.toString();
   if (!escapeExp.test(result)) {
     return result;
@@ -37,7 +37,8 @@ function escapeIt (text) {
   .replace(escapeQuotExp, '&quot;');
 };
 <#if(needToIndent){ -#>
-function applyIndent(str, _indent) {
+function applyIndent(_str, _indent) {
+  var str = String(_str);
   var indent = '';
   if (typeof _indent == 'number' && _indent > 0) {
     var res = '';
@@ -59,7 +60,8 @@ function applyIndent(str, _indent) {
 }
 <#}-#>
 <#-
-function applyIndent(str, _indent){
+function applyIndent(_str, _indent){
+  var str = String(_str);
   var indent='';
   if (typeof _indent == 'number' && _indent > 0){
     var res = '';
@@ -69,7 +71,7 @@ function applyIndent(str, _indent){
     indent = res;
   }
   if (typeof _indent == 'string' && _indent.length > 0){
-    indent = _indent 
+    indent = _indent
   }
   if (indent && str) {
     return str.split('\n').map(function(s){
@@ -108,7 +110,7 @@ applyIndent(escapeIt(#{content}), #{indent});
 <#- } else { -#>
 escapeIt(#{content});
 <#- } -#>
-<#  
+<#
     break;
     case 'expression':
 #> out +=<#if (indent && !noIndent) { -#>
@@ -118,7 +120,7 @@ applyIndent(#{content}, #{indent});
 <#- } else { -#>
 #{content};
 <#}-#>
-<#  
+<#
     break;
     case 'codeblock':
 #> <#if (blockIndent) { -#>
