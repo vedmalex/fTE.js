@@ -122,6 +122,7 @@ module.exports = {
         }
         break;
       case 'codeblock':
+        out += ' ';
         if (blockIndent) {
           out += applyIndent(content, block.indent)
         } else if (block.indent) {

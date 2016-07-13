@@ -1,4 +1,4 @@
-{ 
+{
 //http://pegjs.majda.cz/online
 //http://peg.arcanis.fr/
 
@@ -16,7 +16,7 @@ function parseIt(input) {
           result.main.push(block);
         break;
       case "directive":
-          result.directives.push(block);  
+          result.directives.push(block);
         break;
       case "expression":
         result.main.push(block);
@@ -56,11 +56,11 @@ function parseIt(input) {
     this.line = loc.start.line;
     this.column = loc.start.column;
   }
-  
+
   function j(arr) {
     return arr.join("");
   }
-  
+
   // flatten an array and join it
   function f(arr) {
    if(arr){
@@ -96,7 +96,7 @@ text = text:(
    return new node(f(text), "text");
 }
 
-onlyText = text:(!notText.)* 
+onlyText = text:(!notText.)*
 
 midText = &codeBlocks onlyText &codeBlocks
 
@@ -104,21 +104,21 @@ firstText = onlyText &codeBlocks
 
 lastText = &codeBlocks onlyText
 
-codeBlocks = 
+codeBlocks =
   canBeInBlock
  / block
  / directive
- 
-canBeInBlock = 
+
+canBeInBlock =
   expression
  / uexpression
  / codeBlock
  / directive
 
-expression "expression" = indent:_ eStart content:(!( eEnd / ueStart) .)* eEnd 
+expression "expression" = indent:_ eStart content:(!( eEnd / ueStart) .)* eEnd
 { return new node(f(content), "expression", undefined, f(indent));}
 
-uexpression "escaped expression" = indent:_ ueStart content:(!( eEnd / eStart ) .)* eEnd 
+uexpression "escaped expression" = indent:_ ueStart content:(!( eEnd / eStart ) .)* eEnd
 { return new node(f(content), "uexpression", undefined, f(indent));}
 
 codeBlock "code block" = indent:(eol? _) cbStart content:(!(cbEnd / (blockStartDif / blockEndEdn)) .)* cbEnd
@@ -127,22 +127,22 @@ codeBlock "code block" = indent:(eol? _) cbStart content:(!(cbEnd / (blockStartD
 directive "directive" = _ dStart _ content:directives _ "("? _? name:( stringType _? ","? _? )* ")"? _? cbEnd (_ eol)?
 { return new node(content, "directive", f(name)); }
 
-notText = directive / cbStart / cbEnd / expression / uexpression / blockEnd / blockStart 
+notText = directive / cbStart / cbEnd / expression / uexpression / blockEnd / blockStart
 
 reservedEnd = eEnd / cbEnd / blockEnd
 
-block = name:blockStart content: blockContent blockEnd 
+block = name:blockStart content: blockContent blockEnd
  { return new node(content,"block",name);}
 
 stringType = name:(quotedString / dQuotedString){return name;}
- 
-quotedString "single quoted name"= 
+
+quotedString "single quoted name"=
 "'" name:(!"'".)* "'" {return f(name)}
 
-dQuotedString "double quoted name"= 
+dQuotedString "double quoted name"=
 '"' name:(!'"'.)* '"' {return f(name)}
 
-cStart =  ((eol _)? "<#-") / (_"<#")
+cStart =  ((eol _)? "<#-") / "<#"
 
 cEnd = ("-#>" (_ eol)?) / "#>"
 
@@ -170,7 +170,7 @@ directives = valiableName
 
 valiableName = name:([a-z0-9_]i)* {return f(name)}
 
-_ = WhiteSpace* 
+_ = WhiteSpace*
 __eol = _ eol
 eol__ = eol _
 

@@ -163,10 +163,10 @@ module.exports = {
       out += applyIndent(JSON.stringify(extend), ' ');
       out += ';\n    this.mergeParent(this.factory.ensure(this.parent))\n'
     }
-    out += '  },\n  dependency: {\n';
+    out += '  },\n  dependency: {\n  ';
     if (extend) {
       out += applyIndent(JSON.stringify(extend), '    ');
-      out += ': 1,\n'
+      out += ': 1,\n  '
     }
     if (reqList.length > 0) {
       for (var i = 0, len = reqList.length; i < len; i++) {
