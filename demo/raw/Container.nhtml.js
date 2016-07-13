@@ -17,7 +17,8 @@ module.exports = {
       }
       return result.replace(escapeAmpExp, '&amp;').replace(escapeLtExp, '&lt;').replace(escapeGtExp, '&gt;').replace(escapeQuotExp, '&quot;')
     }
-    function applyIndent(str, _indent) {
+    function applyIndent(_str, _indent) {
+      var str = String(_str);
       var indent = '';
       if (typeof _indent == 'number' && _indent > 0) {
         var res = '';

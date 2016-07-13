@@ -1,6 +1,5 @@
 (function(){
-  return {
-   script: function (obj, _content, partial){
+  return {   script: function (obj, _content, partial){
      function content(blockName, ctx) {
        if(ctx === undefined || ctx === null) ctx = obj;
        return _content(blockName, ctx, content, partial);
@@ -15,7 +14,7 @@
        if (text == null) {
          return '';
        }
-       
+     
        var result = text.toString();
        if (!escapeExp.test(result)) {
          return result;
@@ -48,7 +47,7 @@
          if (text == null) {
            return '';
          }
-         
+       
          var result = text.toString();
          if (!escapeExp.test(result)) {
            return result;
@@ -59,7 +58,8 @@
          .replace(escapeGtExp, '&gt;')
          .replace(escapeQuotExp, '&quot;');
        };
-       function applyIndent(str, _indent) {
+       function applyIndent(_str, _indent) {
+         var str = String(_str);
          var indent = '';
          if (typeof _indent == 'number' && _indent > 0) {
            var res = '';
@@ -96,8 +96,8 @@
      this.mergeParent(this.factory.ensure(this.parent))
    },
    dependency: {
-     "Container.nhtml": 1,
-     "Container3.nhtml": 1,
+       "Container.nhtml": 1,
+       "Container3.nhtml": 1,
    }
  }
  ;

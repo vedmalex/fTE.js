@@ -1,4 +1,5 @@
-module.exports = {   script: function (context, _content, partial){
+(function(){
+  return {   script: function (context, _content, partial){
      function content(blockName, ctx) {
        if(ctx === undefined || ctx === null) ctx = context;
        return _content(blockName, ctx, content, partial);
@@ -25,28 +26,24 @@ module.exports = {   script: function (context, _content, partial){
        .replace(escapeQuotExp, '&quot;');
      };
      
-     /*2:1*/
-      out +="<div>\n  <p>\n  ";
-     /*4:3*/
-       if(context == 'Santa'){
-     /*5:1*/
-      out +="    Hello Dear";
-     /*5:15*/
-      out +=" " + context;
-     /*5:26*/
-      out +="!";
-     /*5:27*/
-      } else {
-     /*7:1*/
-      out +="    Hello";
-     /*7:10*/
-      out +=" " + context;
-     /*7:21*/
-      out +="!";
-     /*7:22*/
+     /*1:1*/
+      if(!some){
+     /*1:15*/
+      out +="else ";
+     /*1:20*/
       }
-     /*8:9*/
-      out +="\n  </p>\n</div>\n";
+     /*1:25*/
+      out +="if(filters.hasOwnProperty('";
+     /*1:52*/
+      out +=allNonEmbedded[i].to;
+     
+     /*1:75*/
+      out +="')){\n        filter = filters['";
+     /*2:27*/
+      out +=allNonEmbedded[i].to;
+     
+     /*2:50*/
+      out +="'];\n";
      return out;
    },
    compile: function() {  },
@@ -54,3 +51,4 @@ module.exports = {   script: function (context, _content, partial){
      }
  }
  ;
+})();

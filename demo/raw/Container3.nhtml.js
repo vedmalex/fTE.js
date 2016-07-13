@@ -17,7 +17,7 @@ module.exports = {
       }
       return result.replace(escapeAmpExp, '&amp;').replace(escapeLtExp, '&lt;').replace(escapeGtExp, '&gt;').replace(escapeQuotExp, '&quot;')
     }
-    out += '<div>\n  <p>\n';
+    out += '<div>\n  <p>\n  ';
     if (context == 'Santa') {
       out += '    Hello Dear';
       out += ' ' + context;

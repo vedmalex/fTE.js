@@ -1,5 +1,4 @@
-module.exports = {
-   script: function (context, _content, partial){
+module.exports = {   script: function (context, _content, partial){
      function content(blockName, ctx) {
        if(ctx === undefined || ctx === null) ctx = context;
        return _content(blockName, ctx, content, partial);
@@ -14,7 +13,7 @@ module.exports = {
        if (text == null) {
          return '';
        }
-       
+     
        var result = text.toString();
        if (!escapeExp.test(result)) {
          return result;
@@ -25,7 +24,8 @@ module.exports = {
        .replace(escapeGtExp, '&gt;')
        .replace(escapeQuotExp, '&quot;');
      };
-     function applyIndent(str, _indent) {
+     function applyIndent(_str, _indent) {
+       var str = String(_str);
        var indent = '';
        if (typeof _indent == 'number' && _indent > 0) {
          var res = '';
@@ -63,7 +63,7 @@ module.exports = {
      this.mergeParent(this.factory.ensure(this.parent))
    },
    dependency: {
-     "PanelHeading.nhtml": 1,
-   }
+       "PanelHeading.nhtml": 1,
+     }
  }
  ;

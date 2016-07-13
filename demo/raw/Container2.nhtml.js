@@ -17,11 +17,11 @@ module.exports = {
       }
       return result.replace(escapeAmpExp, '&amp;').replace(escapeLtExp, '&lt;').replace(escapeGtExp, '&gt;').replace(escapeQuotExp, '&quot;')
     }
-    out += '<div> \n  <h3>yet another header title</h3> \n  <p>';
-    out += escapeIt('<' + context.head.header);
+    out += '<div>\n  <h3>yet another header title</h3>\n  <p>';
+    out += escapeIt('<' + context.header);
     out += '</p>\n</div>\n';
     out += partial(context.greetings, 'head');
-    out += '\n\n!!! работает... даже если partial определен в базовом шаблоне... !!!';
+    out += '\n\n!!! работает... даже если partial определен в базовом шаблоне... !!!\n';
     return out
   },
   compile: function () {

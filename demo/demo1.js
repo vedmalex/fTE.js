@@ -7,11 +7,11 @@ var raw = new Factory({
 });
 
 console.time('raw');
-s = raw.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+s = raw.run({title:'Happy Santa', content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
 console.timeEnd('raw');
 
 console.time('raw-cached');
-s = raw.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+s = raw.run({title:'Happy Santa', content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
 console.timeEnd('raw-cached');
 
 var comp = new Factory({
@@ -20,11 +20,11 @@ var comp = new Factory({
 });
 
 console.time('compiled');
-s = comp.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+s = comp.run({title:'Happy Santa', content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
 console.timeEnd('compiled');
 
 console.time('compiled-cached');
-s = comp.run({content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
+s = comp.run({title:'Happy Santa', content:'TEXT', header:'this is the header', greetings:'Santa'}, 'Container2.nhtml');
 console.timeEnd('compiled-cached');
 
 fs.writeFileSync('demo1.html', s);

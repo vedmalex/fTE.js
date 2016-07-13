@@ -1,7 +1,7 @@
 <#@ extend "Container1.nhtml"#>
-<div> 
-  <h3>yet another header title</h3> 
-  <p>!{"<"+context.head.header}</p>
+<div>
+  <h3>yet another header title</h3>
+  <p>!{"<"+context.header}</p>
 </div>
 #{partial(context.greetings, 'head')}
 

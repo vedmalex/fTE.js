@@ -1,6 +1,5 @@
 (function(){
-  return {
-   script: function (context, _content, partial){
+  return {   script: function (context, _content, partial){
      function content(blockName, ctx) {
        if(ctx === undefined || ctx === null) ctx = context;
        return _content(blockName, ctx, content, partial);
@@ -15,7 +14,7 @@
        if (text == null) {
          return '';
        }
-       
+     
        var result = text.toString();
        if (!escapeExp.test(result)) {
          return result;
@@ -28,16 +27,16 @@
      };
      
      /*2:1*/
-      out +="<div> \n  <h3>yet another header title</h3> \n  <p>";
+      out +="<div>\n  <h3>yet another header title</h3>\n  <p>";
      /*4:6*/
-      out +=escapeIt("<"+context.head.header);
-     /*4:32*/
+      out +=escapeIt("<"+context.header);
+     /*4:27*/
       out +="</p>\n</div>\n";
      /*6:1*/
       out +=partial(context.greetings, 'head');
      
      /*6:38*/
-      out +="\n\n!!! работает... даже если partial определен в базовом шаблоне... !!!";
+      out +="\n\n!!! работает... даже если partial определен в базовом шаблоне... !!!\n";
      return out;
    },
    compile: function() {
@@ -45,8 +44,8 @@
      this.mergeParent(this.factory.ensure(this.parent))
    },
    dependency: {
-     "Container1.nhtml": 1,
-   }
+       "Container1.nhtml": 1,
+     }
  }
  ;
 })();

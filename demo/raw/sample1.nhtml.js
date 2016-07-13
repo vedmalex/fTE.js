@@ -1,8 +1,8 @@
 module.exports = {
-  script: function (data, _content, partial) {
+  script: function (context, _content, partial) {
     function content(blockName, ctx) {
       if (ctx === undefined || ctx === null)
-        ctx = data;
+        ctx = context;
       return _content(blockName, ctx, content, partial)
     }
     var out = '';
@@ -17,27 +17,14 @@ module.exports = {
       }
       return result.replace(escapeAmpExp, '&amp;').replace(escapeLtExp, '&lt;').replace(escapeGtExp, '&gt;').replace(escapeQuotExp, '&quot;')
     }
-    out += '<html>\n	<head>\n		<title>';
-    out += data.title;
-    out += '</title>\n	</head>\n	<body>\n		<p>';
-    out += data.text;
-    out += '</p>\n		';
-    if (data.projects.length) {
-      out += '\n			';
-      for (var i = 0; i < data.projects.length; i++) {
-        out += '\n				<a href="';
-        out += data.projects[i].url;
-        out += '">';
-        out += data.projects[i].name;
-        out += '</a>\n				<p>';
-        out += data.projects[i].description;
-        out += '</p>\n			'
-      }
-      out += '\n		'
-    } else {
-      out += '\n			No projects\n		'
+    if (!some) {
+      out += 'else '
     }
-    out += '\n	</body>\n</html>';
+    out += 'if(filters.hasOwnProperty(\'';
+    out += allNonEmbedded[i].to;
+    out += '\')){\n        filter = filters[\'';
+    out += allNonEmbedded[i].to;
+    out += '\'];\n';
     return out
   },
   compile: function () {

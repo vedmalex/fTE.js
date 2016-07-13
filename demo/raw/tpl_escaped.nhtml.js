@@ -17,32 +17,13 @@ module.exports = {
       }
       return result.replace(escapeAmpExp, '&amp;').replace(escapeLtExp, '&lt;').replace(escapeGtExp, '&gt;').replace(escapeQuotExp, '&quot;')
     }
-    function applyIndent(str, _indent) {
-      var indent = '';
-      if (typeof _indent == 'number' && _indent > 0) {
-        var res = '';
-        for (var i = 0; i < _indent; i++) {
-          res += ' '
-        }
-        indent = res
-      }
-      if (typeof _indent == 'string' && _indent.length > 0) {
-        indent = _indent
-      }
-      if (indent && str) {
-        return str.split('\n').map(function (s) {
-          return indent + s
-        }).join('\n')
-      } else {
-        return str
-      }
-    }
     out += '<html>\n	<head>\n		<title>';
     out += escapeIt(data.title);
     out += '</title>\n	</head>\n	<body>\n		<p>';
     out += escapeIt(data.text);
     out += '</p>';
     if (data.projects.length) {
+      out += '			';
       for (var i = 0; i < data.projects.length; i++) {
         out += '				<a href="';
         out += escapeIt(data.projects[i].url);
@@ -52,6 +33,7 @@ module.exports = {
         out += escapeIt(data.projects[i].description);
         out += '</p>'
       }
+      out += '		'
     } else {
       out += '			No projects'
     }
